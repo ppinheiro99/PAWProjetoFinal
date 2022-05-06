@@ -16,7 +16,8 @@ var identityKey = "id"
 
 func init() {
 	services.OpenDatabase()
-	services.Db.AutoMigrate(&model.Evaluation{})
+	services.Db.AutoMigrate(&model.Subject{})
+	services.Db.AutoMigrate(&model.Presentations{})
 	services.Db.AutoMigrate(&model.User{})
 
 }
@@ -39,14 +40,21 @@ func main() {
 		c.JSON(404, gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
 	})
 
-	evaluation := router.Group("/api/v1/evaluation")
-	evaluation.Use(services.AuthorizationRequired())
+	subject := router.Group("/api/v1/subject")
+	subject.Use(services.AuthorizationRequired())
 	{
-		evaluation.POST("/", routes.AddEvaluation)
-		evaluation.GET("/", routes.GetAllEvaluation)
-		evaluation.GET("/:id", routes.GetEvaluationById)
-		evaluation.PUT("/:id", routes.UpdateEvaluation)
-		evaluation.DELETE("/:id", routes.DeleteEvaluation)
+		subject.POST("/", routes.AddSubject)
+		subject.GET("/", routes.GetAllSubject)
+		subject.GET("/:id", routes.GetSubjectById)
+		subject.PUT("/:id", routes.UpdateSubject)
+		subject.DELETE("/:id", routes.DeleteSubject)
+	}
+
+	presentations := router.Group("/api/v1/presentations")
+	//presentations.Use(services.AuthorizationRequired())
+	{
+		presentations.POST("/", routes.AddPresentation)
+		presentations.GET("/:id", routes.GetPresentationById)
 	}
 
 	auth := router.Group("/api/v1/auth")
