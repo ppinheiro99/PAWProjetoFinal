@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/PAWProjetoFinal/backend/model"
@@ -28,6 +29,8 @@ func LoginHandler(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"status": http.StatusBadRequest, "message": "Bad request!"})
 		return
 	}
+
+	fmt.Println(creds.Username)
 	services.OpenDatabase()
 	services.Db.Find(&usr, "username = ?", creds.Username)
 	if usr.Username == "" || !CheckPasswordHash(creds.Password, usr.Password) {

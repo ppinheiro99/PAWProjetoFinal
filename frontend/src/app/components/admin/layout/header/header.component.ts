@@ -4,11 +4,11 @@ import { TokenService } from "../../../../services/token/token.service";
 import { UsersService } from "../../../../services/user/users.service";
 
 @Component({
-  selector: 'app-top-nav',
-  templateUrl: './top-nav.component.html',
-  styleUrls: ['./top-nav.component.scss']
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss']
 })
-export class TopNavComponent implements OnInit {
+export class HeaderComponent implements OnInit {
   @Output() sideNavToggled = new EventEmitter<void>();
   @Output() messageNavToggled = new EventEmitter<void>();
   name: string

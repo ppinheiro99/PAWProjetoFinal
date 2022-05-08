@@ -20,10 +20,6 @@ const routes: Routes = [
         loadChildren: () => import('./edit-user/profile/profile.module').then(m => m.ProfileModule),   
       },
       {
-        path: 'inBox',
-        loadChildren: () => import('./inBox/inBox.module').then(m => m.InBoxModule),   
-      },
-      {
         path: 'changePass',
         loadChildren: () => import('./edit-user/edit-pass/edit-pass.module').then(m => m.EditPassModule),
       },

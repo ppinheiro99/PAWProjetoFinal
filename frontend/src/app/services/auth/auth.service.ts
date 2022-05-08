@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 //const API_URL = 'http://18.130.231.194:8080/api/';
-const API_URL = 'http://localhost:8080/api/';
+const API_URL = 'http://localhost:8080/api/v1/';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,8 +19,9 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(credentials): Observable<any> {
+    console.log(credentials.email, credentials.password)
     return this.http.post(API_URL + 'auth/login', {
-      email: credentials.email,
+      username: credentials.email,
       password: credentials.password
     }, httpOptions);
   }

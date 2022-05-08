@@ -34,6 +34,7 @@ func main() {
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
+	router.Use(services.GinMiddleware("*"))
 
 	// NO AUTH
 	router.GET("/api/v1/echo", routes.EchoRepeat)
