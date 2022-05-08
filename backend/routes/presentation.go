@@ -13,3 +13,7 @@ func GetPresentationById(c *gin.Context) {
 func AddPresentation(c *gin.Context) {
 	controllers.AddPresentation(c)
 }
+
+func GetQuestionsByPresentationId(c *gin.Context) {
+	controllers.GetQuestionsByPresentationId(c)
+}

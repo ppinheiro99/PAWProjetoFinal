@@ -17,7 +17,7 @@ import (
 func GetPresentationById(c *gin.Context) {
 	var Presentation model.Presentations
 	id := c.Param("id")
-	fmt.Printf("id: %s\n", id)
+
 	services.Db.First(&Presentation, id)
 	if Presentation.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "Presentation not found!"})
@@ -39,9 +39,37 @@ func GetPresentationById(c *gin.Context) {
 
 }
 
+func GetQuestionsByPresentationId(c *gin.Context) {
+	var Presentation model.Presentations
+	var PresentationQuestions []model.PresentationAndQuestion
+	var Questions []model.Questions
+	id := c.Param("id")
+
+	services.Db.First(&Presentation, id)
+	if Presentation.ID == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "Presentation not found!"})
+		return
+	}
+	//ids das perguntas para esta apresentação
+	services.Db.Where("presentation_id = ?", Presentation.ID).Find(&PresentationQuestions)
+	if len(PresentationQuestions) == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "Questions for Presentation not found!"})
+	}
+	var i = 0
+	for i < len(PresentationQuestions) {
+		var Question model.Questions
+		services.Db.First(&Question, PresentationQuestions[i].QuestionID)
+		Questions = append(Questions, Question)
+		i++
+	}
+
+	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": Questions})
+
+}
+
 func AddPresentation(c *gin.Context) {
 	var Presentation model.Presentations
-
+	var Subject model.Subject
 	Presentation.Name = c.Request.FormValue("name")
 	if Presentation.Name == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"status": http.StatusBadRequest, "message": "Name is required!"})
@@ -119,8 +147,13 @@ func AddPresentation(c *gin.Context) {
 			return
 		}
 	}
-	//string to int conversion for subject id
+
 	subjectid, err := strconv.Atoi(c.Request.FormValue("subjectid"))
+	services.Db.Find(&Subject, subjectid)
+	if Subject.ID == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"status": http.StatusBadRequest, "message": "SubjectId not valid!"})
+		return
+	}
 	if err == nil {
 		services.Db.Save(&model.SubjectPresentations{SubjectID: uint(subjectid), PresentationID: Presentation.ID})
 		c.JSON(http.StatusCreated, gin.H{"status": http.StatusCreated, "message": "Create successful!", "resourceId": Presentation.ID})
