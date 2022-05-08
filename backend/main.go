@@ -16,8 +16,11 @@ var identityKey = "id"
 
 func init() {
 	services.OpenDatabase()
-	services.Db.AutoMigrate(&model.Subject{})
 	services.Db.AutoMigrate(&model.Presentations{})
+	services.Db.AutoMigrate(&model.Subject{})
+	services.Db.AutoMigrate(&model.PresentationAndQuestion{})
+	services.Db.AutoMigrate(&model.SubjectPresentations{})
+	services.Db.AutoMigrate(&model.Questions{})
 	services.Db.AutoMigrate(&model.User{})
 
 }

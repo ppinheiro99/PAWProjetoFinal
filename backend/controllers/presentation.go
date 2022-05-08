@@ -3,12 +3,13 @@ package controllers
 import (
 	"bytes"
 	"fmt"
+	"github.com/PAWProjetoFinal/backend/model"
+	"github.com/PAWProjetoFinal/backend/services"
 	"io"
 	"net/http"
 	"os"
-
-	"github.com/PAWProjetoFinal/backend/model"
-	"github.com/PAWProjetoFinal/backend/services"
+	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -31,13 +32,11 @@ func GetPresentationById(c *gin.Context) {
 		c.Header("Cache-Control", "no-cache")
 		c.Header("Content-Length", fmt.Sprintf("%d", len(Presentation.PdfFile)))
 		c.File(Presentation.Name + ".pdf")
-		fmt.Printf("entrei aqui")
+
 		return
 	}
+	c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError, "message": "Something went wrong" + err.Error()})
 
-	//c.JSON(http.StatusOK, Presentation)
-
-	//c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": Presentation})
 }
 
 func AddPresentation(c *gin.Context) {
@@ -48,6 +47,37 @@ func AddPresentation(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"status": http.StatusBadRequest, "message": "Name is required!"})
 		return
 	}
+	if c.Request.FormValue("questions") == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"status": http.StatusBadRequest, "message": "Questions is required!"})
+		return
+	}
+	if c.Request.FormValue("subjectid") == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"status": http.StatusBadRequest, "message": "Subject is required!"})
+		return
+	}
+
+	stringSlice := strings.Split(c.Request.FormValue("questions"), "&")
+	var i = 0
+	var question []model.Questions
+	var q model.Questions
+	for i < len(stringSlice) {
+		currentSlice := strings.Split(stringSlice[i], "=")
+		if (currentSlice[0] == "questions.question") == true {
+			q.Question = currentSlice[1]
+			i++
+		}
+		if (currentSlice[0] == "questions.answer") == true {
+
+			q.Answers = q.Answers + "," + currentSlice[1]
+			i++
+		}
+		if (currentSlice[0] == "questions.correct_answer") == true {
+			q.CorrectAnswer = currentSlice[1]
+			question = append(question, q)
+			i++
+		}
+	}
+
 	file, header, err := c.Request.FormFile("pdf_file")
 	defer file.Close()
 	if err != nil {
@@ -63,13 +93,39 @@ func AddPresentation(c *gin.Context) {
 
 	Presentation.PdfFile = buf.Bytes()
 
-	//Presentation.Teacher = c.Keys["username"].(string)
-
 	services.Db.Save(&Presentation)
 	if Presentation.ID == 0 {
 		c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError, "message": "Couldn't Add Presentation!"})
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"status": http.StatusCreated, "message": "Create successful!", "resourceId": Presentation.ID})
+	i = 0
+	for i < len(question) {
+		q = question[i]
+		services.Db.Save(&question[i])
+		if question[i].ID != 0 {
+			PandQ := model.PresentationAndQuestion{
+				PresentationID: Presentation.ID,
+				QuestionID:     question[i].ID,
+			}
+			services.Db.Save(&PandQ)
+			if PandQ.ID == 0 {
+				c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError, "message": "Something went wrong!"})
+				return
+			}
+			i++
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError, "message": "Something went wrong!"})
+			return
+		}
+	}
+	//string to int conversion for subject id
+	subjectid, err := strconv.Atoi(c.Request.FormValue("subjectid"))
+	if err == nil {
+		services.Db.Save(&model.SubjectPresentations{SubjectID: uint(subjectid), PresentationID: Presentation.ID})
+		c.JSON(http.StatusCreated, gin.H{"status": http.StatusCreated, "message": "Create successful!", "resourceId": Presentation.ID})
+		return
+	}
+	c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError, "message": "Something went wrong!"})
+
 }
