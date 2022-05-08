@@ -6,6 +6,6 @@ import (
 
 type SubjectPresentations struct {
 	gorm.Model
-	PresentationID uint `gorm:"not null foreignKey:id;references:id"`
-	SubjectID      uint `gorm:"foreignKey:id;references:id not null" `
+	PresentationID uint `gorm:"constraint:OnDelete:SET NULL; not null foreignKey:id;references:id"`
+	SubjectID      uint `gorm:"constraint:OnDelete:SET NULL; foreignKey:id;references:id not null" `
 }
