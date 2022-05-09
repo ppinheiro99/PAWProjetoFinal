@@ -21,6 +21,8 @@ func init() {
 	services.Db.AutoMigrate(&model.PresentationAndQuestion{})
 	services.Db.AutoMigrate(&model.SubjectPresentations{})
 	services.Db.AutoMigrate(&model.Questions{})
+	services.Db.AutoMigrate(&model.StudentsAndPresentationDone{})
+	services.Db.AutoMigrate(&model.PresentationDone{})
 	services.Db.AutoMigrate(&model.User{})
 
 }
@@ -62,6 +64,7 @@ func main() {
 		presentations.DELETE("/:id", routes.DeletePresentationById)
 		presentations.PUT("/:id", routes.UpdatePresentationById)
 		presentations.GET("/:id/questions", routes.GetQuestionsByPresentationId)
+
 	}
 
 	auth := router.Group("/api/v1/auth")

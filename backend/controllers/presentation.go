@@ -6,6 +6,7 @@ import (
 	"github.com/PAWProjetoFinal/backend/model"
 	"github.com/PAWProjetoFinal/backend/services"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -32,6 +33,10 @@ func GetPresentationById(c *gin.Context) {
 		c.Header("Cache-Control", "no-cache")
 		c.Header("Content-Length", fmt.Sprintf("%d", len(Presentation.PdfFile)))
 		c.File(Presentation.Name + ".pdf")
+		e := os.Remove(Presentation.Name + ".pdf")
+		if e != nil {
+			log.Fatal(e)
+		}
 
 		return
 	}
