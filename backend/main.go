@@ -59,6 +59,8 @@ func main() {
 	{
 		presentations.POST("/", routes.AddPresentation)
 		presentations.GET("/:id", routes.GetPresentationById)
+		presentations.DELETE("/:id", routes.DeletePresentationById)
+		presentations.PUT("/:id", routes.UpdatePresentationById)
 		presentations.GET("/:id/questions", routes.GetQuestionsByPresentationId)
 	}
 
