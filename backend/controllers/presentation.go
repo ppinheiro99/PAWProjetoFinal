@@ -102,6 +102,7 @@ func AddPresentation(c *gin.Context) {
 		if (currentSlice[0] == "questions.correct_answer") == true {
 			q.CorrectAnswer = currentSlice[1]
 			question = append(question, q)
+			q.Answers = ""
 			i++
 		}
 	}
