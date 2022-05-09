@@ -15,16 +15,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { authInterceptorProviders } from './helpers/auth.interceptor';
 import { CommonModule } from '@angular/common';
-import { PassrecoverComponent } from './components/passrecover/passrecover.component';
-import { PassrecoverFormComponent } from './components/passrecover-form/passrecover-form.component';
 import { MatSelectCountryModule } from '@angular-material-extensions/select-country';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    PassrecoverComponent,
-    PassrecoverFormComponent
   ],
   imports: [
     BrowserModule,

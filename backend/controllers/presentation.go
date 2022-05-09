@@ -7,7 +7,7 @@ import (
 	"github.com/PAWProjetoFinal/backend/services"
 	"io"
 	"net/http"
-	"os"
+	//"os"
 	"strconv"
 	"strings"
 
@@ -23,6 +23,7 @@ func GetPresentationById(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "Presentation not found!"})
 		return
 	}
+	/*
 	err := os.WriteFile(Presentation.Name+".pdf", Presentation.PdfFile, 0644)
 	if err == nil {
 		c.Header("Content-Type", "application/pdf")
@@ -36,7 +37,7 @@ func GetPresentationById(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError, "message": "Something went wrong" + err.Error()})
-
+*/
 }
 
 func GetQuestionsByPresentationId(c *gin.Context) {

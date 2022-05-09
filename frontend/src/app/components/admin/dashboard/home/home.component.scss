@@ -1,4 +1,29 @@
-#dashboard{position:relative; margin-left: 84px;top: 0;}
-#dashboard .wrap-dashboard{padding: 16px 10px 22px;position:relative;}
-#dashboard .wrap-dashboard .title{font-size:28px;color:#333333;font-weight: 600;}
-#dashboard .wrap-dashboard::before{content:"";position:absolute;bottom:0;width: 70%;height: 1px;background:#c7cdd1;}
+main #dashboard {
+    position: relative;
+    top: 0;
+    margin-left: 84px;
+}
+
+#dashboard .wrap-dashboard {
+    padding: 16px 10px 22px;
+    position: relative;
+}
+
+#dashboard .wrap-dashboard .title {
+    font-size: 28px;
+    color: #333333;
+    font-weight: 600;
+}
+
+#dashboard .wrap-dashboard::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 70%;
+    height: 1px;
+    background: #c7cdd1;
+}
+
+mat-sidenav-container .mat-drawer-container {
+    margin-left: 84px;
+}

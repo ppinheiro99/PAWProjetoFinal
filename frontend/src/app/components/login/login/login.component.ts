@@ -16,14 +16,14 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   constructor(private router: Router, private authService: AuthService, private tokenStorage: TokenService, public fb: FormBuilder) {
     this.validationForm = fb.group({
-      email: [null, [ Validators.required, Validators.email]],
+      username: [null, [ Validators.required]],
       password: [null, Validators.required],
     })
   }
 
 
-  get email() {
-    return this.validationForm.get('email');
+  get username() {
+    return this.validationForm.get('username');
   }
 
   get password() {

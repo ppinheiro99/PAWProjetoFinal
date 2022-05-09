@@ -1,4 +1,4 @@
-export const chefeTrafegoRoutes = [
+export const alunoRoutes = [
   {
     path: 'dashboard',
     loadChildren: () =>

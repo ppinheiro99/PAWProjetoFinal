@@ -1,4 +1,4 @@
-export const superAdminRoutes = [
+export const professorRoutes = [
   {
     path: 'dashboard',
     loadChildren: () =>
