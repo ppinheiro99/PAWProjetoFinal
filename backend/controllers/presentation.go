@@ -3,14 +3,15 @@ package controllers
 import (
 	"bytes"
 	"fmt"
-	"github.com/PAWProjetoFinal/backend/model"
-	"github.com/PAWProjetoFinal/backend/services"
 	"io"
 	"log"
 	"net/http"
-	//"os"
+	"os"
 	"strconv"
 	"strings"
+
+	"github.com/PAWProjetoFinal/backend/model"
+	"github.com/PAWProjetoFinal/backend/services"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,7 +25,6 @@ func GetPresentationById(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "Presentation not found!"})
 		return
 	}
-	/*
 	err := os.WriteFile(Presentation.Name+".pdf", Presentation.PdfFile, 0644)
 	if err == nil {
 		c.Header("Content-Type", "application/pdf")
@@ -42,7 +42,7 @@ func GetPresentationById(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError, "message": "Something went wrong" + err.Error()})
-*/
+
 }
 func DeletePresentationById(c *gin.Context) {
 	var Presentation model.Presentations

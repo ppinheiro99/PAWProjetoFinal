@@ -1,29 +1,8 @@
-main #dashboard {
-    position: relative;
-    top: 0;
-    margin-left: 84px;
-}
-
-#dashboard .wrap-dashboard {
-    padding: 16px 10px 22px;
-    position: relative;
-}
-
-#dashboard .wrap-dashboard .title {
-    font-size: 28px;
-    color: #333333;
-    font-weight: 600;
-}
-
-#dashboard .wrap-dashboard::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    width: 70%;
-    height: 1px;
-    background: #c7cdd1;
-}
-
-mat-sidenav-container .mat-drawer-container {
-    margin-left: 84px;
-}
+main #dashboard {position: relative;top: 0;margin-left: 84px;}
+#dashboard .wrap-dashboard {padding: 16px 10px 22px;position: relative;}
+#dashboard .wrap-dashboard .title {font-size: 28px;color: #333333;font-weight: 600;}
+#dashboard .wrap-dashboard::before {content: "";position: absolute;bottom: 0;width: 70%;height: 1px;background: #c7cdd1;}
+#dashboard .subject{width: 100%;max-width: 262px;height: 100%;max-height: 262px;box-shadow: 0 2px 5px rgb(0 0 0 / 30%);cursor: pointer;margin: 20px 10px;border-radius: 4px;}
+#dashboard .subject:hover{box-shadow: 0 4px 10px rgb(0 0 0 / 35%);}
+#dashboard .subject .subject-img{height: 146px;text-align: center;}
+#dashboard .subject .subject-info{height: 60px;text-align: center;}
