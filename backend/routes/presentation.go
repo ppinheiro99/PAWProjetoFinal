@@ -17,3 +17,11 @@ func AddPresentation(c *gin.Context) {
 func GetQuestionsByPresentationId(c *gin.Context) {
 	controllers.GetQuestionsByPresentationId(c)
 }
+
+func DeletePresentationById(c *gin.Context) {
+	controllers.DeletePresentationById(c)
+}
+
+func UpdatePresentationById(c *gin.Context) {
+	controllers.UpdatePresentationById(c)
+}
