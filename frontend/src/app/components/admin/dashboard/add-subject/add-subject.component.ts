@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SubjectsService } from 'src/app/services/subjects/subjects.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-subject',
@@ -8,20 +9,20 @@ import { SubjectsService } from 'src/app/services/subjects/subjects.service';
 })
 export class AddSubjectComponent implements OnInit {
   subjectName: string
-  constructor(private subjectsService : SubjectsService) { }
+  constructor(private subjectsService : SubjectsService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
   addSubject(){
-    console.warn(this.subjectName)
     this.subjectsService.addSubject(this.subjectName).subscribe(
       data => {
-       console.warn(data)
        this.getSubjectsData()
+       this.dialog.closeAll()
       },
       err => {
         alert(err)
+        this.dialog.closeAll()
       }
     );
   }
@@ -29,7 +30,6 @@ export class AddSubjectComponent implements OnInit {
   getSubjectsData(){
     this.subjectsService.getAllSubjects().subscribe(data =>{
       this.subjectsService.subjects = data.data
-      console.warn(data.data)
     })
   }
 

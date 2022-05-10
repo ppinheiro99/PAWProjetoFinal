@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit {
   getSubjectsData(){
     this.subjectsService.getAllSubjects().subscribe(data =>{
       this.subjectsService.subjects = data.data
-      console.warn(data.data)
     })
   }
 
@@ -35,7 +34,6 @@ export class HomeComponent implements OnInit {
   }
 
   addSubject(){
-    console.warn("entrei")
     this.dialog.open(AddSubjectComponent)
   }
 
