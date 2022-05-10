@@ -6,12 +6,30 @@
             </div>
         </div>
         <div class="container">
-            <div div class="subject">
+            <div class="wrap-subject" *ngIf="subjectsAvailable()">
+                <div class="subject" *ngFor="let subject of subjectsService.subjects">
+                    <div class="subject-img">
+                        <div class="svg-img background-image"></div>
+                    </div>
+                    <div class="subject-info">
+                        {{subject.name}}
+                    </div>
+                </div>
+                <div div class="subject add-subject" (click)="addSubject()">
+                    <div class="subject-img">
+                        <div class="svg-img background-add-subject"></div>
+                    </div>
+                    <div class="subject-info">
+                        Adicionar Disciplina
+                    </div>
+                </div>
+            </div>
+            <div div class="subject add-subject" *ngIf="subjectsService.subjects == undefined" (click)="addSubject()">
                 <div class="subject-img">
-                    Imagem
+                    <div class="svg-img background-add-subject"></div>
                 </div>
                 <div class="subject-info">
-                    Base de Dados Avançadas
+                    Adicionar Disciplina
                 </div>
             </div>
         </div>

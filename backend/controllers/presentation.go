@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"log"
+	//"log"
 	"net/http"
-	"os"
+	//"os"
 	"strconv"
 	"strings"
 
@@ -25,8 +25,8 @@ func GetPresentationById(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "Presentation not found!"})
 		return
 	}
-	err := os.WriteFile(Presentation.Name+".pdf", Presentation.PdfFile, 0644)
-	if err == nil {
+	//err := os.WriteFile(Presentation.Name+".pdf", Presentation.PdfFile, 0644)
+	/*if err == nil {
 		c.Header("Content-Type", "application/pdf")
 		c.Header("Content-Disposition", "attachment; filename="+Presentation.Name+".pdf")
 		c.Header("Content-Disposition", "inline;filename="+Presentation.Name+".pdf")
@@ -42,7 +42,7 @@ func GetPresentationById(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError, "message": "Something went wrong" + err.Error()})
-
+	*/
 }
 func DeletePresentationById(c *gin.Context) {
 	var Presentation model.Presentations

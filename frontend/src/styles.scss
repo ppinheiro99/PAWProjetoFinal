@@ -6,7 +6,6 @@
 @import './scss/variables';
 @import './scss/theme';
 @import "~leaflet/dist/leaflet.css";
-
 @font-face {
     font-family: 'Lato';
     font-style: normal;
@@ -56,11 +55,27 @@
     src: url(./assets/fonts/FontinSans/Lato-Thin.woff) format('woff');
 }
 
+.container {
+    max-width: 1470px;
+    padding: 0 15px;
+}
 
-.container{max-width: 1470px;padding: 0 15px;}
-.title{font-family: 'Lato',sans-serif;}
-p{font-family: 'Lato',sans-serif;font-size: 14px;line-height:14px;font-weight: 400;}
+.title {
+    font-family: 'Lato', sans-serif;
+}
 
+p {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: 400;
+}
+
+.svg-img {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
 
 html,
 body {

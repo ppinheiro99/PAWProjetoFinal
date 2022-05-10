@@ -6,10 +6,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatGridListModule } from '@angular/material/grid-list';
-
+import { MatDialogModule } from '@angular/material/dialog';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { HomeComponent } from './home/home.component';
-
+import { AddSubjectComponent } from './add-subject/add-subject.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,8 +20,10 @@ import { HomeComponent } from './home/home.component';
     MatCardModule,
     MatTableModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule,
+    FormsModule
   ],
-  declarations: [HomeComponent]
+  declarations: [HomeComponent, AddSubjectComponent]
 })
 export class DashboardModule {}
