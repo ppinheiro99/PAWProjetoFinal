@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "356e2275-5ddb-4bb4-a94a-98e69f553572",
+		"_postman_id": "4633767c-72b9-43f5-b763-3fbf57444cbb",
 		"name": "pawg projeto final",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -351,12 +351,7 @@
 									"value": "2",
 									"type": "default"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "http://localhost:8080/api/v1/presentations/",
@@ -526,12 +521,7 @@
 									"value": "2",
 									"type": "default"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "http://localhost:8080/api/v1/presentations/3",
@@ -545,6 +535,45 @@
 								"v1",
 								"presentations",
 								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Presentations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/presentations/getAll/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"presentations",
+								"getAll",
+								"1"
 							]
 						}
 					},
