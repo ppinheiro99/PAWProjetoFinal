@@ -37,6 +37,10 @@ export class HomeComponent implements OnInit {
     this.dialog.open(AddSubjectComponent)
   }
 
+  showSubject(subject){
+    this.router.navigate(['subject', subject.ID])
+  }
+
 }
 
 

@@ -11,6 +11,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { HomeComponent } from './home/home.component';
 import { AddSubjectComponent } from './add-subject/add-subject.component';
 import { FormsModule } from '@angular/forms';
+import { SubjectDashboardComponent } from './subject-dashboard/subject-dashboard.component';
+import { authInterceptorProviders } from 'src/app/helpers/auth.interceptor';
 @NgModule({
   imports: [
     CommonModule,
@@ -22,8 +24,9 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
   ],
-  declarations: [HomeComponent, AddSubjectComponent]
+  declarations: [HomeComponent, AddSubjectComponent, SubjectDashboardComponent],
+  providers: [authInterceptorProviders]
 })
 export class DashboardModule {}

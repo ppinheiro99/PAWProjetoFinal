@@ -1,35 +1,37 @@
-<div id="dashboard">
+<div id="subject-dashboard">
     <div class="container">
         <div class="wrap-dashboard">
-            <div class="title">Dashboard</div>
+            <div class="btn-back" (click)="backToDashboard()">Voltar</div>
+            <div class="title">{{subject}}</div>
         </div>
     </div>
     <div class="container">
-        <div class="wrap-subject" *ngIf="subjectsAvailable()">
-            <div class="subject" *ngFor="let subject of subjectsService.subjects" (click)="showSubject(subject)">
+        <div class="wrap-subject" *ngIf="presentationAvailable()">
+            <div class="subject" *ngFor="let presentation of presentationService.presentations">
                 <div class="subject-img">
                     <div class="svg-img background-image"></div>
                 </div>
                 <div class="subject-info">
-                    {{subject.name}}
+                    {{presentation.name}}
                 </div>
             </div>
-            <div div class="subject add-subject" (click)="addSubject()">
+            <div div class="subject add-subject" (click)="addPresentation()">
                 <div class="subject-img">
                     <div class="svg-img background-add-subject"></div>
                 </div>
                 <div class="subject-info">
-                    Adicionar Disciplina
+                    Adicionar Apresentação
                 </div>
             </div>
         </div>
-        <div div class="subject add-subject" *ngIf="subjectsService.subjects == undefined" (click)="addSubject()">
+        <div div class="subject add-subject" *ngIf="presentationService.presentations == undefined" (click)="addPresentation()">
             <div class="subject-img">
                 <div class="svg-img background-add-subject"></div>
             </div>
             <div class="subject-info">
-                Adicionar Disciplina
+                Adicionar Apresentação
             </div>
         </div>
     </div>
 </div>
+

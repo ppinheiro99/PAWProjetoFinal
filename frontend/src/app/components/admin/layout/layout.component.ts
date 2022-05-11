@@ -14,7 +14,7 @@ export interface MessageData {
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })
-export class LayoutComponent implements OnInit, OnDestroy { 
+export class LayoutComponent implements OnInit { 
 
   private readonly mediaWatcher: Subscription;
   constructor(private userService: UsersService, private tokenService: TokenService, public chat: ChatService) {
@@ -23,8 +23,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy(): void {
-    this.mediaWatcher.unsubscribe();
-  }
+  // ngOnDestroy(): void {
+  //   this.mediaWatcher.unsubscribe();
+  // }
 
 }

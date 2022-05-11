@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	//"log"
+	"log"
 	"net/http"
-	//"os"
+	"os"
 	"strconv"
 	"strings"
 
@@ -15,6 +15,30 @@ import (
 
 	"github.com/gin-gonic/gin"
 )
+
+func GetAllPresentation(c *gin.Context) {
+	var subjectsPresentations []model.SubjectPresentations
+	id := c.Param("id")
+
+	services.Db.Find(&subjectsPresentations, "subject_id = ?", id)
+
+	if len(subjectsPresentations) <= 0 {
+		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "message": "Empty list!"})
+		return
+	}
+
+	var responsePresentation []model.Presentations
+
+	for i := 0; i < len(subjectsPresentations); i++ {
+		var presentations model.Presentations
+		services.Db.First(&presentations, subjectsPresentations[i].PresentationID)
+		responsePresentation = append(responsePresentation, presentations)
+	}
+
+	services.Db.Find(&subjectsPresentations, "id = ?", id)
+
+	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": responsePresentation})
+}
 
 func GetPresentationById(c *gin.Context) {
 	var Presentation model.Presentations
@@ -25,8 +49,8 @@ func GetPresentationById(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "Presentation not found!"})
 		return
 	}
-	//err := os.WriteFile(Presentation.Name+".pdf", Presentation.PdfFile, 0644)
-	/*if err == nil {
+	err := os.WriteFile(Presentation.Name+".pdf", Presentation.PdfFile, 0644)
+	if err == nil {
 		c.Header("Content-Type", "application/pdf")
 		c.Header("Content-Disposition", "attachment; filename="+Presentation.Name+".pdf")
 		c.Header("Content-Disposition", "inline;filename="+Presentation.Name+".pdf")
@@ -42,7 +66,6 @@ func GetPresentationById(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError, "message": "Something went wrong" + err.Error()})
-	*/
 }
 func DeletePresentationById(c *gin.Context) {
 	var Presentation model.Presentations

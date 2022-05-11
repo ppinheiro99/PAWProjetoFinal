@@ -6,6 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func GetAllPresentation(c *gin.Context) {
+	controllers.GetAllPresentation(c)
+}
+
 func GetPresentationById(c *gin.Context) {
 	controllers.GetPresentationById(c)
 }

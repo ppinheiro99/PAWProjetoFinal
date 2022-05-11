@@ -60,6 +60,7 @@ func main() {
 	presentations.Use(services.AuthorizationRequired())
 	{
 		presentations.POST("/", routes.AddPresentation)
+		presentations.GET("/getAll/:id", routes.GetAllPresentation)
 		presentations.GET("/:id", routes.GetPresentationById)
 		presentations.DELETE("/:id", routes.DeletePresentationById)
 		presentations.PUT("/:id", routes.UpdatePresentationById)

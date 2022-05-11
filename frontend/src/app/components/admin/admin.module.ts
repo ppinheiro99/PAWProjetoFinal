@@ -9,7 +9,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AdminRoutingModule } from './admin-routing.module';
 import { LayoutComponent } from './layout/layout.component';
-import{ HeaderComponent } from './layout/header/header.component';
+import { HeaderComponent } from './layout/header/header.component';
 import { authInterceptorProviders } from "../../helpers/auth.interceptor";
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
@@ -35,6 +35,6 @@ import { MatBadgeModule } from '@angular/material/badge';
   ],
   entryComponents: [],
   declarations: [LayoutComponent, HeaderComponent],
- // providers: [authInterceptorProviders,ChatService]
+  providers: [authInterceptorProviders]
 })
 export class AdminModule {}
