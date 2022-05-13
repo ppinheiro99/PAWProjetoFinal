@@ -1,0 +1,34 @@
+.wrap-presentation {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.wrap-presentation .btn-add-presentation {
+    cursor: pointer;
+}
+
+.wrap-presentation .wrap-add-presentation .question-input-n-response .wrap-responses {
+    position: relative;
+}
+
+.wrap-presentation .wrap-add-presentation .question-input-n-response .wrap-responses .number-responses {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.wrap-presentation .wrap-add-presentation .question-input-n-response .wrap-responses {
+    position: relative;
+    width: fit-content;
+}
+
+.wrap-presentation .wrap-add-presentation .question-input-n-response .wrap-responses .arrow-down {
+    content: "";
+    position: absolute;
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    top: 3px;
+    right: 3px;
+    background-image: url("data:image/svg+xml,%3csvg width='24px' height='24px' viewBox='0 0 24 24' id='arrow_down' data-name='arrow down' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cdefs%3e%3cclipPath id='clip-path'%3e%3crect id='Mask' width='24' height='24' fill='none' stroke='black' stroke-width='1'/%3e%3c/clipPath%3e%3c/defs%3e%3cg id='_20x20_arrow-back--grey' data-name='20x20/arrow-back--grey' transform='translate(0 24) rotate(-90)'%3e%3crect id='Mask-2' data-name='Mask' width='24' height='24' fill='none'/%3e%3cg id='_20x20_arrow-back--grey-2' data-name='20x20/arrow-back--grey' clip-path='url(%23clip-path)'%3e%3cg id='Group_2' data-name='Group 2' transform='translate(8 7)'%3e%3cpath id='Rectangle' d='M0%2c6.586V0H6.586' transform='translate(0.686 5.157) rotate(-45)' fill='none' stroke='black' stroke-miterlimit='10' stroke-width='1.5'/%3e%3c/g%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
+}
