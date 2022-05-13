@@ -13,6 +13,7 @@ import { AddSubjectComponent } from './add-subject/add-subject.component';
 import { FormsModule } from '@angular/forms';
 import { SubjectDashboardComponent } from './subject-dashboard/subject-dashboard.component';
 import { authInterceptorProviders } from 'src/app/helpers/auth.interceptor';
+import { AddPresentationComponent } from './add-presentation/add-presentation.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -26,7 +27,7 @@ import { authInterceptorProviders } from 'src/app/helpers/auth.interceptor';
     MatDialogModule,
     FormsModule,
   ],
-  declarations: [HomeComponent, AddSubjectComponent, SubjectDashboardComponent],
+  declarations: [HomeComponent, AddSubjectComponent, SubjectDashboardComponent, AddPresentationComponent],
   providers: [authInterceptorProviders]
 })
 export class DashboardModule {}
