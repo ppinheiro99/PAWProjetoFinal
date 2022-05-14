@@ -27,9 +27,13 @@ export class PresentationsService {
     return this.http.get(API_URL + id, httpOptions)
   }
 
-  addPresentation(data): Observable<any> {
+  addPresentation(name, pdf,questions,subjectId): Observable<any> {
+    console.warn(name, pdf,questions,subjectId)
     return this.http.post(API_URL, {
-      name: data,
+      name: name,
+      pdf_file: pdf,
+      questions: questions,
+      subjectid: subjectId
     }, httpOptions);
   }
   

@@ -4,7 +4,9 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 
@@ -47,24 +49,24 @@ func GetPresentationById(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "Presentation not found!"})
 		return
 	}
-	//	err := os.WriteFile(Presentation.Name+".pdf", Presentation.PdfFile, 0644)
-	/*	if err == nil {
-			c.Header("Content-Type", "application/pdf")
-			c.Header("Content-Disposition", "attachment; filename="+Presentation.Name+".pdf")
-			c.Header("Content-Disposition", "inline;filename="+Presentation.Name+".pdf")
-			c.Header("Content-Transfer-Encoding", "binary")
-			c.Header("Cache-Control", "no-cache")
-			c.Header("Content-Length", fmt.Sprintf("%d", len(Presentation.PdfFile)))
-			c.File(Presentation.Name + ".pdf")
-			e := os.Remove(Presentation.Name + ".pdf")
-			if e != nil {
-				log.Fatal(e)
-			}
-
-			return
+	err := os.WriteFile(Presentation.Name+".pdf", Presentation.PdfFile, 0644)
+	if err == nil {
+		c.Header("Content-Type", "application/pdf")
+		c.Header("Content-Disposition", "attachment; filename="+Presentation.Name+".pdf")
+		c.Header("Content-Disposition", "inline;filename="+Presentation.Name+".pdf")
+		c.Header("Content-Transfer-Encoding", "binary")
+		c.Header("Cache-Control", "no-cache")
+		c.Header("Content-Length", fmt.Sprintf("%d", len(Presentation.PdfFile)))
+		c.File(Presentation.Name + ".pdf")
+		e := os.Remove(Presentation.Name + ".pdf")
+		if e != nil {
+			log.Fatal(e)
 		}
-		c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError, "message": "Something went wrong" + err.Error()})
-	*/
+
+		return
+	}
+	c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError, "message": "Something went wrong" + err.Error()})
+
 }
 func DeletePresentationById(c *gin.Context) {
 	var Presentation model.Presentations
