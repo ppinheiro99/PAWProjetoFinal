@@ -94,7 +94,7 @@ export class AddPresentationComponent implements OnInit {
     this.presentationsService.addPresentation(this.presentationName,this.pdf,questions,2).subscribe(
       data => {
        console.log(data)
-      //  this.dialog.closeAll()
+       this.dialog.closeAll()
       },
       err => {
         alert(err)

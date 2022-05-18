@@ -39,7 +39,8 @@
                         <div *ngFor='let in of counter(questionIdAndRespondes[i].n);let j = index'>
                             <input type="text" id="response{{i}}{{j}}" name="response{{j}}" placeholder="Insira a Resposta">
                         </div>
-                        <select type="number" class="correct-response" [(ngModel)]="varCorrectResponses" (ngModelChange)="correctResponse(i)" [ngModelOptions]="{standalone: true}">
+                        <select type="number" placeholder="Resposta correta" class="correct-response" [(ngModel)]="varCorrectResponses" (ngModelChange)="correctResponse(i)" [ngModelOptions]="{standalone: true}">
+                            <option value="" disabled selected>Resposta Correta</option>
                             <option *ngFor='let in of counter(questionIdAndRespondes[i].n);let j = index' [ngValue]="j">{{j+1}}</option>
                         </select>
 
