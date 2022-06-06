@@ -24,6 +24,7 @@ func init() {
 	services.Db.AutoMigrate(&model.StudentsAndPresentationDone{})
 	services.Db.AutoMigrate(&model.PresentationDone{})
 	services.Db.AutoMigrate(&model.User{})
+	services.Db.AutoMigrate(&model.DoneAnswers{})
 
 }
 
@@ -64,6 +65,8 @@ func main() {
 		presentations.DELETE("/:id", routes.DeletePresentationById)
 		presentations.PUT("/:id", routes.UpdatePresentationById)
 		presentations.GET("/:id/questions", routes.GetQuestionsByPresentationId)
+		presentations.POST("/submitAnswer", routes.SubmitAnswer)
+		presentations.GET("/:id/getAnswers", routes.GetPresentationAnswers)
 
 	}
 
