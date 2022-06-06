@@ -29,3 +29,11 @@ func DeletePresentationById(c *gin.Context) {
 func UpdatePresentationById(c *gin.Context) {
 	controllers.UpdatePresentationById(c)
 }
+
+func SubmitAnswer(c *gin.Context) {
+	controllers.SubmitAnswer(c)
+}
+
+func GetPresentationAnswers(c *gin.Context) {
+	controllers.GetPresentationAnswers(c)
+}

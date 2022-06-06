@@ -242,6 +242,10 @@ func AddPresentation(c *gin.Context) {
 	var q model.Questions
 	for i < len(stringSlice) {
 		currentSlice := strings.Split(stringSlice[i], "=")
+		if (currentSlice[0] == "questions.number") == true {
+			q.QuestionNumber = currentSlice[1]
+			i++
+		}
 		if (currentSlice[0] == "questions.question") == true {
 			q.Question = currentSlice[1]
 			i++
@@ -313,5 +317,61 @@ func AddPresentation(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError, "message": "Something went wrong!"})
+
+}
+
+func SubmitAnswer(c *gin.Context) {
+
+	var doneAnswer model.DoneAnswers
+	var user model.User
+
+	if err := c.ShouldBindJSON(&doneAnswer); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"status": http.StatusBadRequest, "message": "Check request!"})
+		return
+	}
+	services.Db.Where("username = ?", c.Keys["username"].(string)).Find(&user)
+
+	if user.ID == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"status": http.StatusBadRequest, "message": "Username not found!"})
+		return
+	}
+
+	doneAnswer.StudentId = user.ID
+	services.Db.Save(&doneAnswer)
+	c.JSON(http.StatusCreated, gin.H{"status": http.StatusCreated, "message": "Answer Submitted with success!", "Student:": doneAnswer.StudentId})
+	return
+}
+
+func GetPresentationAnswers(c *gin.Context) {
+	var Presentation model.Presentations
+	var PresentationQuestions []model.PresentationAndQuestion
+	var DoneAnswers []model.DoneAnswers
+	id := c.Param("id")
+
+	services.Db.First(&Presentation, id)
+	if Presentation.ID == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "Presentation not found!"})
+		return
+	}
+
+	services.Db.Where("presentation_id = ?", Presentation.ID).Find(&PresentationQuestions)
+	if len(PresentationQuestions) == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "Questions for Presentation not found!"})
+	}
+	var i = 0
+	for i < len(PresentationQuestions) {
+		var DoneAnswer model.DoneAnswers
+		services.Db.Find(&DoneAnswer, PresentationQuestions[i].QuestionID)
+		fmt.Printf("ID: ", PresentationQuestions[i].QuestionID)
+		if DoneAnswer.ID != 0 {
+			DoneAnswers = append(DoneAnswers, DoneAnswer)
+		}
+		i++
+	}
+	if len(DoneAnswers) == 0 {
+		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": "No Answers were given to this presentation"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": DoneAnswers})
+	}
 
 }
