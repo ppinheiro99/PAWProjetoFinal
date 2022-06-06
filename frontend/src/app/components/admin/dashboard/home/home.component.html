@@ -6,12 +6,16 @@
     </div>
     <div class="container">
         <div class="wrap-subject" *ngIf="subjectsAvailable()">
-            <div class="subject" *ngFor="let subject of subjectsService.subjects" (click)="showSubject(subject)">
-                <div class="subject-img">
+            <div class="subject" *ngFor="let subject of subjectsService.subjects">
+                <div class="subject-img" (click)="showSubject(subject)">
                     <div class="svg-img background-image"></div>
                 </div>
-                <div class="subject-info">
-                    {{subject.name}}
+                <div class="wrap-subject-info" style="display: flex; align-items: center">
+                    <div class="svg-img subject-change-name"></div>
+                    <div class="subject-info">
+                        {{subject.name}}
+                    </div>
+                    <div class="svg-img subject-delete"(click)="deleteSubject(subject)"></div>
                 </div>
             </div>
             <div div class="subject add-subject" (click)="addSubject()">

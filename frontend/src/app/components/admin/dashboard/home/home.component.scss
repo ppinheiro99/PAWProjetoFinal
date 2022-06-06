@@ -55,8 +55,39 @@
     height: 100%;
 }
 
+#dashboard .wrap-subject .wrap-subject-info{
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: space-between;
+    max-width: 150px;
+    margin: auto;
+}
+
+#dashboard .wrap-subject .wrap-subject-info .svg-img:hover{
+    opacity: 0.5;
+} 
+
 #dashboard .subject .subject-img .background-image {
-    background-image: url("https://inst-fs-dub-prod.inscloudgate.net/files/2e49e2c0-2038-42ef-9464-748866152bb1/FCT.jpg?download=1&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NTIxNjg1NDAsInVzZXJfaWQiOm51bGwsInJlc291cmNlIjoiL2ZpbGVzLzJlNDllMmMwLTIwMzgtNDJlZi05NDY0LTc0ODg2NjE1MmJiMS9GQ1QuanBnIiwianRpIjoiNDM2ODk1ZDktZWE0ZS00ZWIzLWEyZjctYTM2MzhkM2FhMTdlIiwiaG9zdCI6bnVsbCwiZXhwIjoxNjUyNzczMzQwfQ.6sP4PWj8F8EZ3gaJ9tx63LDaV6B8qhBg2UYj9I-A_0SifWzpolxY1aWJwYhHyRJgnCtNzfIteQ90fhwSt5DN0g&geometry=524x292&format=webp");
+    background-image: url(../../../../../assets/images/faculdade.png);      
+}
+
+#dashboard .subject .subject-change-name{
+    width: 14px;
+    height: 14px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%3c%3fxml version='1.0' standalone='no'%3f%3e %3c!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 20010904//EN' 'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'%3e %3csvg version='1.0' xmlns='http://www.w3.org/2000/svg' width='512.000000pt' height='512.000000pt' viewBox='0 0 512.000000 512.000000' preserveAspectRatio='xMidYMid meet'%3e%3cg transform='translate(0.000000%2c512.000000) scale(0.100000%2c-0.100000)' fill='black' stroke='none'%3e%3cpath d='M4395 5107 c-22 -8 -58 -23 -80 -35 -25 -13 -487 -469 -1206 -1189 l-1166 -1168 -78 -390 c-67 -340 -75 -394 -66 -426 13 -43 67 -94 109 -104 20 -4 152 18 389 65 197 39 374 75 393 80 28 8 266 241 1206 1182 1317 1319 1219 1209 1219 1368 -1 137 -20 169 -238 387 -147 147 -193 187 -240 208 -69 32 -181 42 -242 22z m269 -446 c136 -136 158 -162 153 -182 -4 -13 -47 -64 -97 -114 l-90 -90 -178 178 -177 177 96 95 c54 53 104 95 115 95 11 0 84 -64 178 -159z m-424 -426 l175 -175 -919 -919 -919 -919 -214 -42 c-117 -24 -216 -40 -220 -37 -3 4 13 102 36 219 l42 213 917 918 c504 504 919 917 922 917 3 0 84 -79 180 -175z'/%3e%3cpath d='M445 4290 c-194 -40 -352 -179 -417 -368 l-23 -67 0 -1705 0 -1705 23 -66 c57 -166 185 -294 350 -351 l67 -23 1705 0 1705 0 67 23 c163 57 286 178 350 348 l23 59 3 1172 c2 1163 2 1173 -18 1213 -23 45 -80 80 -130 80 -50 0 -107 -35 -130 -80 -20 -39 -20 -56 -20 -1173 0 -1274 5 -1193 -75 -1272 -81 -81 63 -75 -1775 -75 -1838 0 -1694 -6 -1775 75 -81 81 -75 -63 -75 1775 0 1838 -6 1694 75 1775 79 80 -2 75 1272 75 1117 0 1134 0 1173 20 45 23 80 80 80 130 0 50 -35 107 -80 130 -39 20 -55 20 -1187 19 -631 -1 -1166 -5 -1188 -9z'/%3e%3c/g%3e%3c/svg%3e");
+    filter: invert(25%) sepia(76%) saturate(1397%) hue-rotate(185deg) brightness(99%) contrast(93%);
+}
+
+#dashboard .subject .subject-delete{
+    width: 14px;
+    height: 14px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%3c%3fxml version='1.0' encoding='iso-8859-1'%3f%3e %3c!-- Generator: Adobe Illustrator 19.0.0%2c SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3e %3csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 458.5 458.5' style='enable-background:new 0 0 458.5 458.5%3b' xml:space='preserve'%3e%3cg%3e%3cg%3e%3cg%3e%3cpath d='M382.078%2c57.069h-89.78C289.128%2c25.075%2c262.064%2c0%2c229.249%2c0S169.37%2c25.075%2c166.2%2c57.069H76.421 c-26.938%2c0-48.854%2c21.916-48.854%2c48.854c0%2c26.125%2c20.613%2c47.524%2c46.429%2c48.793V399.5c0%2c32.533%2c26.467%2c59%2c59%2c59h192.508 c32.533%2c0%2c59-26.467%2c59-59V154.717c25.816-1.269%2c46.429-22.668%2c46.429-48.793C430.933%2c78.985%2c409.017%2c57.069%2c382.078%2c57.069z M229.249%2c30c16.244%2c0%2c29.807%2c11.673%2c32.76%2c27.069h-65.52C199.442%2c41.673%2c213.005%2c30%2c229.249%2c30z M354.503%2c399.501 c0%2c15.991-13.009%2c29-29%2c29H132.995c-15.991%2c0-29-13.009-29-29V154.778c12.244%2c0%2c240.932%2c0%2c250.508%2c0V399.501z M382.078%2c124.778 c-3.127%2c0-302.998%2c0-305.657%2c0c-10.396%2c0-18.854-8.458-18.854-18.854S66.025%2c87.07%2c76.421%2c87.07h305.657 c10.396%2c0%2c18.854%2c8.458%2c18.854%2c18.854S392.475%2c124.778%2c382.078%2c124.778z'/%3e%3cpath d='M229.249%2c392.323c8.284%2c0%2c15-6.716%2c15-15V203.618c0-8.284-6.715-15-15-15c-8.284%2c0-15%2c6.716-15%2c15v173.705 C214.249%2c385.607%2c220.965%2c392.323%2c229.249%2c392.323z'/%3e%3cpath d='M306.671%2c392.323c8.284%2c0%2c15-6.716%2c15-15V203.618c0-8.284-6.716-15-15-15s-15%2c6.716-15%2c15v173.705 C291.671%2c385.607%2c298.387%2c392.323%2c306.671%2c392.323z'/%3e%3cpath d='M151.828%2c392.323c8.284%2c0%2c15-6.716%2c15-15V203.618c0-8.284-6.716-15-15-15c-8.284%2c0-15%2c6.716-15%2c15v173.705 C136.828%2c385.607%2c143.544%2c392.323%2c151.828%2c392.323z'/%3e%3c/g%3e%3c/g%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3cg%3e%3c/g%3e%3c/svg%3e");
+    filter: invert(55%) sepia(78%) saturate(5902%) hue-rotate(328deg) brightness(102%) contrast(102%);
 }
 
 #dashboard .subject .subject-img .background-add-subject {

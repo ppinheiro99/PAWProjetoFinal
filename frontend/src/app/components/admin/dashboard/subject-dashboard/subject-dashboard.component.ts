@@ -5,6 +5,7 @@ import { SubjectsService } from 'src/app/services/subjects/subjects.service';
 import { TokenService } from 'src/app/services/token/token.service';
 import { ActivatedRoute } from '@angular/router';
 import { PresentationsService } from 'src/app/services/presentations/presentations.service';
+import { AddPresentationComponent } from '../add-presentation/add-presentation.component';
 
 @Component({
   selector: 'app-subject-dashboard',
@@ -47,11 +48,17 @@ export class SubjectDashboardComponent implements OnInit {
   }
 
   addPresentation(){
-    // this.dialog.open(AddSubjectComponent)
+     this.dialog.open(AddPresentationComponent)
   }
 
   backToDashboard(){
     this.router.navigate(['dashboard'])
+  }
+
+  deletePresentation(presentation){
+    this.presentationService.deletePresentation(presentation.ID).subscribe(data =>{
+      this.getAllPresentationsData()
+    })
   }
 
 }

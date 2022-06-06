@@ -1,0 +1,53 @@
+<div class="wrap-presentation">
+    <form>
+        <div class="wrap-add-presentation">
+            <input type="text" id="presentationName" name="presentationName" [(ngModel)]="presentationName" type="text" placeholder="Insira o nome da Apresentação">
+            <input type="file" class="file-upload" (change)="getPdf($event.target.files)">
+            <div class="number-questions">
+                <mat-form-field appearance="fill">
+                    <mat-label>Numero de Perguntas</mat-label>
+                    <mat-select [(value)]="questionsNumber">
+                        <mat-option value="1">1</mat-option>
+                        <mat-option value="2">2</mat-option>
+                        <mat-option value="3">3</mat-option>
+                        <mat-option value="4">4</mat-option>
+                        <mat-option value="5">5</mat-option>
+                        <mat-option value="6">6</mat-option>
+                        <mat-option value="7">7</mat-option>
+                        <mat-option value="8">8</mat-option>
+                        <mat-option value="9">9</mat-option>
+                        <mat-option value="10">10</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="question-input-n-response" *ngIf="questionsNumber != ''">
+                <div class="flex" *ngFor='let in of counter(questionsNumber);let i = index'>
+                    <div class="wrap-responses">
+                        <input type="text" id="question{{i}}" name="question{{i}}" placeholder="Insira a Pergunta">
+                        <select type="number" class="select-responses" [(ngModel)]="selectResponses" (ngModelChange)="responsesSelect(i)" [ngModelOptions]="{standalone: true}">
+                            <option [ngValue]="2" value="2" >2</option>
+                            <option [ngValue]="3" value="3" >3</option>
+                            <option [ngValue]="4" value="4" >4</option>
+                            <option [ngValue]="5" value="5" >5</option>
+                            <option [ngValue]="6" value="6" >6</option>
+                            <option [ngValue]="7" value="7" >7</option>
+                            <option [ngValue]="8" value="8" >8</option>
+                        </select>
+                    </div>
+
+                    <div class="responses-inputs flex" *ngIf="questionIdAndRespondes.length > 0 && i == questionIdAndRespondes[i].id">
+                        <div *ngFor='let in of counter(questionIdAndRespondes[i].n);let j = index'>
+                            <input type="text" id="response{{i}}{{j}}" name="response{{j}}" placeholder="Insira a Resposta">
+                        </div>
+                        <select type="number" placeholder="Resposta correta" class="correct-response" [(ngModel)]="varCorrectResponses" (ngModelChange)="correctResponse(i)" [ngModelOptions]="{standalone: true}">
+                            <option value="" disabled selected>Resposta Correta</option>
+                            <option *ngFor='let in of counter(questionIdAndRespondes[i].n);let j = index' [ngValue]="j">{{j+1}}</option>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-add-presentation" (click)="addPresentation()" type="submit">Adicionar</div>
+    </form>
+</div>

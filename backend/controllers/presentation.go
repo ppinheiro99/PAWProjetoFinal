@@ -66,6 +66,7 @@ func GetPresentationById(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError, "message": "Something went wrong" + err.Error()})
+
 }
 func DeletePresentationById(c *gin.Context) {
 	var Presentation model.Presentations
