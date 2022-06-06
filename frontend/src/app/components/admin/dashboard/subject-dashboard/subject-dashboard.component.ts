@@ -55,4 +55,10 @@ export class SubjectDashboardComponent implements OnInit {
     this.router.navigate(['dashboard'])
   }
 
+  deletePresentation(presentation){
+    this.presentationService.deletePresentation(presentation.ID).subscribe(data =>{
+      this.getAllPresentationsData()
+    })
+  }
+
 }

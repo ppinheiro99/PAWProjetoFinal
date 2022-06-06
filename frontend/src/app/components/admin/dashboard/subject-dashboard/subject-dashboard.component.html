@@ -11,12 +11,15 @@
                 <div class="subject-img">
                     <div class="svg-img background-image"></div>
                 </div>
-                <div class="subject-info">
-                    {{presentation.name}}
+                <div class="wrap-subject-info" style="display: flex; align-items: center">
+                    <div class="subject-info">
+                        {{presentation.name}}
+                    </div>
+                    <div class="svg-img subject-delete"(click)="deletePresentation(presentation)"></div>
                 </div>
             </div>
-            <div div class="subject add-subject" (click)="addPresentation()">
-                <div class="subject-img">
+            <div div class="subject add-subject">
+                <div class="subject-img" (click)="addPresentation()">
                     <div class="svg-img background-add-subject"></div>
                 </div>
                 <div class="subject-info">

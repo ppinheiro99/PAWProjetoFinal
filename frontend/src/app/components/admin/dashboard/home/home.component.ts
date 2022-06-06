@@ -41,6 +41,14 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['subject', subject.ID])
   }
 
+  deleteSubject(subject){
+    event.preventDefault();
+    console.warn(subject.ID)
+    this.subjectsService.deleteSubject(subject.ID).subscribe(data =>{
+      this.getSubjectsData()
+    })
+  }
+
 }
 
 

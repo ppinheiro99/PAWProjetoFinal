@@ -32,5 +32,9 @@ export class SubjectsService {
       name: data,
     }, httpOptions);
   }
+
+  deleteSubject(id): Observable<any> {
+    return this.http.delete(API_URL + id, httpOptions);
+  }
   
 }

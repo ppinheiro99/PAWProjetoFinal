@@ -25,6 +25,7 @@
         box-shadow: 0 0 0 30px $white inset;
         -webkit-box-shadow: 0 0 0 30px $white inset;
       }
+      button{background-color:#38b34a;}
     }
   }
   &:after {
@@ -38,7 +39,7 @@
   }
   &:before {
     content: '';
-    background: $primary-color;
+    background-image: linear-gradient(to right, white , #38b34a);
     position: absolute;
     top: 50%;
     left: 0;

@@ -36,5 +36,9 @@ export class PresentationsService {
       subjectid: subjectId
     }, httpOptions);
   }
-  
+    
+  deletePresentation(id): Observable<any> {
+    return this.http.delete(API_URL + id, httpOptions);
+  }
+
 }
