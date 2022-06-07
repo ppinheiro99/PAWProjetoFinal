@@ -29,12 +29,14 @@ export class PresentationsService {
 
   addPresentation(name, pdf_file,questions,subjectId): Observable<any> {
     console.warn(name, pdf_file,questions,subjectId)
-    return this.http.post(API_URL, {
-      name: name,
-      pdf_file: pdf_file,
-      questions: questions,
-      subjectid: subjectId
-    }, httpOptions);
+    
+    let formDataBody = new FormData()
+    formDataBody.append("name", name)
+    formDataBody.append("pdf_file", pdf_file)
+    formDataBody.append("questions", questions)
+    formDataBody.append("subjectid", subjectId)
+    
+    return this.http.post(API_URL, formDataBody);
   }
     
   deletePresentation(id): Observable<any> {
