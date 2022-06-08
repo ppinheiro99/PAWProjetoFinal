@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PresentationsService } from 'src/app/services/presentations/presentations.service';
 
 @Component({
@@ -20,10 +21,13 @@ export class AddPresentationComponent implements OnInit {
   questionIdAndRespondes = [];
   correctResponseAndId = [];
   pdf: File
-  constructor(private presentationsService : PresentationsService, private dialog: MatDialog) { }
-
-  ngOnInit(): void {
+  subjectId : any;
+  constructor(private route: ActivatedRoute, private presentationsService : PresentationsService, private dialog: MatDialog, @Inject(MAT_DIALOG_DATA) data) { 
+    this.subjectId = data
   }
+ 
+
+  ngOnInit(): void {}
 
   getPdf(event){
     console.warn(event[0])
@@ -69,10 +73,13 @@ export class AddPresentationComponent implements OnInit {
   addPresentation(){
     var questions = ""
     for (var i = 0; i < this.questionIdAndRespondes.length; i++) {
-      //  console.log((<HTMLInputElement>document.getElementById("question"+ i)).value);
+      console.log((<HTMLInputElement>document.getElementById("page-number"+ i)).value);
+      
       if(i == 0)
-      questions += "questions.question=" + (<HTMLInputElement>document.getElementById("question"+ i)).value;
+      questions += "questions.number=" +  ((<HTMLInputElement>document.getElementById("page-number"+ i)).value) + "e" +  (((<HTMLInputElement>document.getElementById("page-number"+ i)).value)+1);
+      // questions += "questions.question=" + (<HTMLInputElement>document.getElementById("question"+ i)).value;
       else
+      questions += "&questions.number=" +  ((<HTMLInputElement>document.getElementById("page-number"+ i)).value) + "e" +  (((<HTMLInputElement>document.getElementById("page-number"+ i)).value)+1);
       questions += "&"+"questions.question=" + (<HTMLInputElement>document.getElementById("question"+ i)).value;
       for (var j = 0; j < this.questionIdAndRespondes[i].n; j++) {
         // console.log((<HTMLInputElement>document.getElementById("response"+i + j)).value);
@@ -86,14 +93,17 @@ export class AddPresentationComponent implements OnInit {
       }
 
     }
-    console.warn(this.presentationName)
-    console.warn(this.pdf)
-    console.warn(questions)
-    console.warn(2)
 
-    this.presentationsService.addPresentation(this.presentationName,this.pdf,questions,2).subscribe(
+    console.log(this.subjectId)
+    // console.warn(this.presentationName)
+    // console.warn(this.pdf)
+    // console.warn(questions)
+    // console.warn(2)
+
+    this.presentationsService.addPresentation(this.presentationName,this.pdf,questions,this.subjectId.id).subscribe(
       data => {
        console.log(data)
+       this.getAllPresentationsData()
        this.dialog.closeAll()
       },
       err => {
@@ -101,6 +111,13 @@ export class AddPresentationComponent implements OnInit {
         this.dialog.closeAll()
       }
     );
+  }
+
+  getAllPresentationsData(){
+    this.presentationsService.getAllPresentations(this.subjectId.id).subscribe(data =>{
+      this.presentationsService.presentations = data.data
+      console.warn(this.presentationsService.presentations)
+    })
   }
 
 }

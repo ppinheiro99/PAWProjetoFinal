@@ -15,6 +15,7 @@ import { SubjectDashboardComponent } from './subject-dashboard/subject-dashboard
 import { authInterceptorProviders } from 'src/app/helpers/auth.interceptor';
 import { AddPresentationComponent } from './add-presentation/add-presentation.component';
 import { MatSelectModule } from '@angular/material/select';
+import { PresentationPdfComponent } from './presentation-pdf/presentation-pdf.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -29,7 +30,7 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     MatSelectModule
   ],
-  declarations: [HomeComponent, AddSubjectComponent, SubjectDashboardComponent, AddPresentationComponent],
+  declarations: [HomeComponent, AddSubjectComponent, SubjectDashboardComponent, AddPresentationComponent, PresentationPdfComponent],
   providers: [authInterceptorProviders]
 })
 export class DashboardModule {}

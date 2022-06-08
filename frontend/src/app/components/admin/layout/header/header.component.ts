@@ -41,4 +41,8 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/login'])
     window.location.reload();
   }
+
+  home(){
+    this.router.navigate([''])
+  }
 }
