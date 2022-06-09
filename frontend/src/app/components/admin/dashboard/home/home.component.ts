@@ -4,6 +4,8 @@ import { TokenService } from "../../../../services/token/token.service";
 import { SubjectsService } from 'src/app/services/subjects/subjects.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddSubjectComponent } from '../add-subject/add-subject.component';
+import { ChatService } from 'src/app/services/socket/chat.service';
+import { PresentationsService } from 'src/app/services/presentations/presentations.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +14,7 @@ import { AddSubjectComponent } from '../add-subject/add-subject.component';
 })
 export class HomeComponent implements OnInit {
   isLoggedIn = false;
-  constructor(private router: Router,public subjectsService : SubjectsService, private tokenStorage: TokenService, private dialog: MatDialog) {
+  constructor(private presentationsService : PresentationsService,public chat: ChatService,private router: Router,public subjectsService : SubjectsService, private tokenStorage: TokenService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -21,6 +23,7 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['/dashboard'])
     }
     this.getSubjectsData()
+    this.chat.init()
   }
 
   getSubjectsData(){
@@ -46,6 +49,22 @@ export class HomeComponent implements OnInit {
     console.warn(subject.ID)
     this.subjectsService.deleteSubject(subject.ID).subscribe(data =>{
       this.getSubjectsData()
+    })
+  }
+
+  presentationAvailable(){
+    if(this.chat.presentationData == undefined)
+      return false
+    else{
+      this.chat.presentationData == undefined
+      return true
+    }
+  }
+
+  sendResponse(answer, id){
+    console.warn(answer)
+    this.presentationsService.sendUserResponse(answer, id).subscribe(data =>{
+      console.warn("sucesso")
     })
   }
 

@@ -1,4 +1,4 @@
-<div id="dashboard">
+<div *ngIf="!presentationAvailable()" id="dashboard">
     <div class="container">
         <div class="wrap-dashboard">
             <div class="title">Dashboard</div>
@@ -35,5 +35,13 @@
                 Adicionar Disciplina
             </div>
         </div>
+    </div>
+</div>
+<div *ngIf="presentationAvailable()" id="questions">
+    <div class="question-name">
+        {{this.chat.presentationData.question}}
+    </div>
+    <div class="subject" *ngFor="let questions of this.chat.presentationData.answers">
+        <div (click)="sendResponse(questions, this.chat.presentationData.id)">{{questions}}</div>
     </div>
 </div>

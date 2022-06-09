@@ -73,13 +73,13 @@ export class AddPresentationComponent implements OnInit {
   addPresentation(){
     var questions = ""
     for (var i = 0; i < this.questionIdAndRespondes.length; i++) {
-      console.log((<HTMLInputElement>document.getElementById("page-number"+ i)).value);
-      
+      // console.log((<HTMLInputElement>document.getElementById("page-number"+ i)).value);
+      // console.log( parseInt((<HTMLInputElement>document.getElementById("page-number"+ i)).value)+1)
       if(i == 0)
-      questions += "questions.number=" +  ((<HTMLInputElement>document.getElementById("page-number"+ i)).value) + "e" +  (((<HTMLInputElement>document.getElementById("page-number"+ i)).value)+1);
+      questions += "questions.number=" +  ((<HTMLInputElement>document.getElementById("page-number"+ i)).value) + "e" +  (parseInt((<HTMLInputElement>document.getElementById("page-number"+ i)).value)+1);
       // questions += "questions.question=" + (<HTMLInputElement>document.getElementById("question"+ i)).value;
       else
-      questions += "&questions.number=" +  ((<HTMLInputElement>document.getElementById("page-number"+ i)).value) + "e" +  (((<HTMLInputElement>document.getElementById("page-number"+ i)).value)+1);
+      questions += "&questions.number=" +  ((<HTMLInputElement>document.getElementById("page-number"+ i)).value) + "e" +  (parseInt((<HTMLInputElement>document.getElementById("page-number"+ i)).value)+1);
       questions += "&"+"questions.question=" + (<HTMLInputElement>document.getElementById("question"+ i)).value;
       for (var j = 0; j < this.questionIdAndRespondes[i].n; j++) {
         // console.log((<HTMLInputElement>document.getElementById("response"+i + j)).value);

@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import WebViewer, { WebViewerInstance } from '@pdftron/webviewer';
 import { PresentationsService } from 'src/app/services/presentations/presentations.service';
 import { Router } from '@angular/router';
+import { ChatService } from 'src/app/services/socket/chat.service';
 
 @Component({
   selector: 'app-presentation-pdf',
@@ -16,7 +17,7 @@ export class PresentationPdfComponent implements OnInit, AfterViewInit {
 
   private documentLoaded$: Subject<void>;
 
-  constructor(private router: Router,public presentationService: PresentationsService) { 
+  constructor(private router: Router,public presentationService: PresentationsService, public chat: ChatService) { 
     this.documentLoaded$ = new Subject<void>();
   }
 
@@ -42,7 +43,7 @@ export class PresentationPdfComponent implements OnInit, AfterViewInit {
          const { documentViewer, annotationManager } = instance.Core;
          documentViewer.addEventListener('pageNumberUpdated', pageNumber => {
           console.log(pageNumber)
-          
+          this.chat.sendPageNumber(pageNumber)
         });
          
      });
@@ -51,6 +52,27 @@ export class PresentationPdfComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     if(this.presentationService.presentation == undefined)
       this.router.navigate([''])
+    this.presentationService.getPresentationInfo(this.presentationService.presentation.ID).subscribe(data =>{
+      console.log(data.data)
+      for(var i = 0; i < data.data.length; i++){
+        console.warn(data.data[i].answers)
+        const split1 = data.data[i].answers.split(/[,_]+/);
+        const result1 =  split1.filter(e =>  e);
+        const split2 = data.data[i].question_number.split(/[e_]+/);
+        const result2 =  split2.filter(e =>  e);
+        console.log(result2[1])
+        this.presentationService.presentationData.push({
+          id: data.data[i].ID,
+          answers: result1,
+          correctAnswer: data.data[i].correct_answer,
+          questionNumber: result2[1],
+          question: data.data[i].question
+        })
+      }
+      console.log(this.presentationService.presentationData)
+      
+      this.chat.sendPresentationData(this.presentationService.presentationData)
+    })
   }
 
 }

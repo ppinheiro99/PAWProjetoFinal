@@ -324,22 +324,13 @@ func AddPresentation(c *gin.Context) {
 func SubmitAnswer(c *gin.Context) {
 
 	var doneAnswer model.DoneAnswers
-	var user model.User
-
 	if err := c.ShouldBindJSON(&doneAnswer); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"status": http.StatusBadRequest, "message": "Check request!"})
 		return
 	}
-	services.Db.Where("username = ?", c.Keys["username"].(string)).Find(&user)
 
-	if user.ID == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"status": http.StatusBadRequest, "message": "Username not found!"})
-		return
-	}
-
-	doneAnswer.StudentId = user.ID
 	services.Db.Save(&doneAnswer)
-	c.JSON(http.StatusCreated, gin.H{"status": http.StatusCreated, "message": "Answer Submitted with success!", "Student:": doneAnswer.StudentId})
+	c.JSON(http.StatusCreated, gin.H{"status": http.StatusCreated, "message": "Answer Submitted with success!", "Student:": doneAnswer.StudentUsername})
 	return
 }
 

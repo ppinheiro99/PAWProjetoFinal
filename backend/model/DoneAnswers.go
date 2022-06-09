@@ -6,9 +6,9 @@ import (
 
 type DoneAnswers struct {
 	gorm.Model
-	StudentId  uint   `gorm:"type:int;not null" json:"student_id"`
-	Answer     string `gorm:"type:varchar(255);not null" json:"answer"`
-	QuestionId uint   `gorm:"type:int;not null" json:"question_id"`
+	StudentUsername string `gorm:"type:varchar(255);not null" json:"student_username"`
+	Answer          string `gorm:"type:varchar(255);not null" json:"answer"`
+	QuestionId      uint   `gorm:"type:int;not null" json:"question_id"`
 	//DateOfPresentation []time.Time `gorm:"type: date" json:"date"` // Array of dates in which apresentation is held
 
 }

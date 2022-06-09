@@ -44,7 +44,7 @@ func LoginHandler(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"status": http.StatusUnauthorized, "message": "Access denied!"})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "message": "Success!", "token": token})
+	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "message": "Success!", "token": token, "username": creds.Username})
 }
 
 func RegisterHandler(c *gin.Context) {

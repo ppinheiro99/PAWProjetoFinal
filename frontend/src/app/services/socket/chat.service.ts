@@ -30,6 +30,8 @@ export class ChatService {
   userList = []
   messages : {message: string, userName: string, senderID: string, userId : string, mine: boolean}[] = []
   user_select: any
+  page_number: any
+  presentationData: any
 
   constructor(private tokenService:TokenService, private http: HttpClient, private userService: UsersService) {
    
@@ -37,69 +39,73 @@ export class ChatService {
 
   init(){
     const user = this.tokenService.getUser()
-    this.user_id = user.ID
-    this.userName = user.Name
-    //this.socket = io(`http://18.130.231.194:3000?userName=${this.userName}&id=${this.user_id}`)
-    this.socket = io(`http://localhost:3000?userName=${this.userName}&id=${this.user_id}`)
+    console.warn(user.username)
+    // this.user_id = user.ID
+    this.userName = user.username
+    // //this.socket = io(`http://18.130.231.194:3000?userName=${this.userName}&id=${this.user_id}`)
+    this.socket = io(`http://localhost:3000?userName=${this.userName}`)
     
-    this.socket.on('user connect', (userList) =>{
+    this.socket.on('user connect', (id) =>{
     })
 
-     this.socket.on('user-list', (userList) =>{
-        this.userList = userList
-        this.userService.getData().subscribe(data =>{
-
-        // quando recebo um user-list é pq alguem novo se conectou e como tal vou receber o array de novos users, tendo entao que limpar o antigo
-        this.users = []  
-        data.data.forEach( (currentValue, index) => { // para saber dos users todos quais estao online e quais estao offline
-          if(userList.find(x => x.id == data.data[index].ID ) != null){ 
-            this.users.push({
-              userID: data.data[index].ID,
-              userName: data.data[index].first_name,
-              online: true
-            })
-          }else{
-            this.users.push({
-              userID: data.data[index].ID,
-              userName: data.data[index].first_name,
-              online: false
-            })
-          }
-        })
-      })
+    this.socket.on('receive_data', (data, username) =>{
+      console.warn("ENTREI " + data.correctAnswer, username)
+      if(this.userName != username)
+        this.presentationData = data  
     })
 
-    this.socket.on("message", (users) =>{
-      this.messageList.push({
-          message:users.message,
-          userName:users.userName,
-          senderID:users.sender,
-          userId: users.received,
-          mine:users.mine
-      })
-        let aux = 0
-        this.messageList.forEach( (currentValue, index) => {
-        if(this.messageList[index].senderID == this.user_select  || this.messageList[index].userId == this.user_select){
-          this.messages[aux] = this.messageList[index]
-          aux++
-        }
-      })
+
+    //  this.socket.on('user-list', (userList) =>{
+    //     this.userList = userList
+    //     this.userService.getData().subscribe(data =>{
+
+    //     // quando recebo um user-list é pq alguem novo se conectou e como tal vou receber o array de novos users, tendo entao que limpar o antigo
+    //     this.users = []  
+    //     data.data.forEach( (currentValue, index) => { // para saber dos users todos quais estao online e quais estao offline
+    //       if(userList.find(x => x.id == data.data[index].ID ) != null){ 
+    //         this.users.push({
+    //           userID: data.data[index].ID,
+    //           userName: data.data[index].first_name,
+    //           online: true
+    //         })
+    //       }else{
+    //         this.users.push({
+    //           userID: data.data[index].ID,
+    //           userName: data.data[index].first_name,
+    //           online: false
+    //         })
+    //       }
+    //     })
+    //   })
+    // })
+
+    // this.socket.on("message", (users) =>{
+    //   this.messageList.push({
+    //       message:users.message,
+    //       userName:users.userName,
+    //       senderID:users.sender,
+    //       userId: users.received,
+    //       mine:users.mine
+    //   })
+    //     let aux = 0
+    //     this.messageList.forEach( (currentValue, index) => {
+    //     if(this.messageList[index].senderID == this.user_select  || this.messageList[index].userId == this.user_select){
+    //       this.messages[aux] = this.messageList[index]
+    //       aux++
+    //     }
+    //   })
+    // })
+  }
+
+  sendPresentationData(data){
+    this.socket.emit('send_presentation_data', { 
+      data: data,
     })
   }
 
-  getMessagesByUser(id){
-     return this.http.get(API_URL + 'getMessagesByUser/' + id, httpOptions);
-  }
-
-  sendMessage(message,receiver_id, sender_id):Observable<any>{
-      this.socket.emit('message', { 
-        data:message,
-        receivedID: receiver_id
-      })
-      return this.http.post(API_URL + 'messages', {
-        message: message,
-        sender_id: sender_id,
-        receiver_id: receiver_id
-      }, httpOptions);
+  sendPageNumber(pageNumber){
+    this.socket.emit('page_number', { 
+      data:pageNumber,
+    })
   }
 }
