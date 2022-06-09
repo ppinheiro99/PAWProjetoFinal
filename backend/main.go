@@ -58,7 +58,7 @@ func main() {
 	}
 
 	presentations := router.Group("/api/v1/presentations")
-	presentations.Use(services.AuthorizationRequired())
+	// presentations.Use(services.AuthorizationRequired())
 	{
 		presentations.POST("/", routes.AddPresentation)
 		presentations.GET("/getAll/:id", routes.GetAllPresentation)

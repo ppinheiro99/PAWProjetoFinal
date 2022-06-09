@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Params, Router } from '@angular/router';
 import { SubjectsService } from 'src/app/services/subjects/subjects.service';
 import { TokenService } from 'src/app/services/token/token.service';
@@ -24,7 +24,6 @@ export class SubjectDashboardComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => this.subjectId = params['id']);
     this.getSubjectById(this.subjectId)
-    console.warn(this.subjectId)
     this.getAllPresentationsData()
   }
 
@@ -48,7 +47,12 @@ export class SubjectDashboardComponent implements OnInit {
   }
 
   addPresentation(){
-     this.dialog.open(AddPresentationComponent)
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      id: this.subjectId,
+    };
+
+    this.dialog.open(AddPresentationComponent,dialogConfig);
   }
 
   backToDashboard(){
@@ -59,6 +63,11 @@ export class SubjectDashboardComponent implements OnInit {
     this.presentationService.deletePresentation(presentation.ID).subscribe(data =>{
       this.getAllPresentationsData()
     })
+  }
+
+  startPresentation(presentation){
+    this.presentationService.presentation = presentation
+    this.router.navigate(['presentation'])
   }
 
 }

@@ -8,7 +8,7 @@
     <div class="container">
         <div class="wrap-subject" *ngIf="presentationAvailable()">
             <div class="subject" *ngFor="let presentation of presentationService.presentations">
-                <div class="subject-img">
+                <div class="subject-img" (click)="startPresentation(presentation)">
                     <div class="svg-img background-image"></div>
                 </div>
                 <div class="wrap-subject-info" style="display: flex; align-items: center">

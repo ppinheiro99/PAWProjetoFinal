@@ -15,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { authInterceptorProviders } from './helpers/auth.interceptor';
 import { CommonModule } from '@angular/common';
-import { MatSelectCountryModule } from '@angular-material-extensions/select-country';
+import { PdfViewerModule } from 'ng2-pdf-viewer/public_api';
 
 
 @NgModule({
@@ -30,7 +30,6 @@ import { MatSelectCountryModule } from '@angular-material-extensions/select-coun
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    MatSelectCountryModule.forRoot('de'), // you can use 'br' | 'de' | 'en' | 'es' | 'fr' | 'hr' | 'it' | 'nl' | 'pt' --> MatSelectCountrySupportedLanguages
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
@@ -38,7 +37,7 @@ import { MatSelectCountryModule } from '@angular-material-extensions/select-coun
     AppRoutingModule,
     HttpClientModule,
     CoreModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
