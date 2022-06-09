@@ -37,3 +37,7 @@ func SubmitAnswer(c *gin.Context) {
 func GetPresentationAnswers(c *gin.Context) {
 	controllers.GetPresentationAnswers(c)
 }
+
+func GetClassificationByPresentation(c *gin.Context) {
+	controllers.GetClassificationByPresentation(c)
+}
