@@ -378,9 +378,9 @@ func GetPresentationAnswers(c *gin.Context) {
 
 	//Primeiro vemos se é um professor ou aluno
 
-	role := strings.Split(c.Keys["username"].(string), "@")
+	// role := strings.Split(c.Keys["username"].(string), "@")
 
-	if IsLetter(role[0]) == true {
+	if IsLetter(c.Keys["username"].(string)) == true {
 		var i = 0
 		for i < len(PresentationQuestions) {
 			var DoneAnswer model.DoneAnswers
@@ -433,44 +433,47 @@ func GetClassificationByPresentation(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "Presentation not found!"})
 		return
 	}
-
 	services.Db.Where("presentation_id = ?", Presentation.ID).Find(&PresentationQuestions)
 	if len(PresentationQuestions) == 0 {
 		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "Questions for Presentation not found!"})
 	}
 
-	services.Db.Find(&usr, "username = ?", c.Keys["username"].(string))
+	// fmt.p
+
+	services.Db.First(&usr, "11111111")
+
+	fmt.Printf("entrei")
 
 	//Primeiro vemos se é um professor ou aluno
 
-	role := strings.Split(c.Keys["username"].(string), "@")
+	// role := strings.Split(c.Keys["username"].(string), "@")
+	// if IsLetter(c.Keys["username"].(string)) == true {
+	// c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": "No Answers were given to this presentation"})
 
-	if IsLetter(role[0]) == true {
-		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": "No Answers were given to this presentation"})
-
-	} else {
-		//if a student , only show their answers
-		var i = 0
-		var classification = 0
-		for i < len(PresentationQuestions) {
-			var DoneAnswer model.DoneAnswers
-			services.Db.Find(&DoneAnswer, PresentationQuestions[i].QuestionID)
-			//fmt.Printf("ID: ", PresentationQuestions[i].QuestionID)
-			if DoneAnswer.ID != 0 {
-				if DoneAnswer.StudentUsername == usr.Username {
-					if DoneAnswer.Was_Right == true {
-						classification += 1
-					}
+	// } else {
+	//if a student , only show their answers
+	var i = 0
+	var classification = 0
+	for i < len(PresentationQuestions) {
+		var DoneAnswer model.DoneAnswers
+		services.Db.Find(&DoneAnswer, PresentationQuestions[i].QuestionID)
+		//fmt.Printf("ID: ", PresentationQuestions[i].QuestionID)
+		if DoneAnswer.ID != 0 {
+			if DoneAnswer.StudentUsername == usr.Username {
+				if DoneAnswer.Was_Right == true {
+					classification += 1
 				}
-
 			}
-			i++
+
 		}
-		if len(DoneAnswers) == 0 {
-			c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": "No Answers were given to this presentation"})
-		} else {
-			c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": classification})
-		}
+		i++
 	}
+	fmt.Printf("teste4 ")
+	if len(DoneAnswers) == 0 {
+		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": "No Answers were given to this presentation"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": classification})
+	}
+	// }
 
 }

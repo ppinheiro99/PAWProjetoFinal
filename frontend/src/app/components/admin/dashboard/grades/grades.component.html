@@ -1,0 +1,11 @@
+<div class="grades">
+    <div *ngFor="let subject of this.subjectsService.subjects ">
+        <div (click)="getAllPresentations(subject.ID)">{{subject.name}}</div>
+    </div>
+
+    <div *ngIf="this.presentationService.presentations != undefined">
+        <div *ngFor="let presentation of this.presentationService.presentations">
+            <div (click)="getGrades(presentation.ID)">{{presentation.name}}</div>
+        </div>
+    </div>
+</div>
