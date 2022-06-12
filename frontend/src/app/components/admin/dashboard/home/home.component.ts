@@ -14,10 +14,15 @@ import { PresentationsService } from 'src/app/services/presentations/presentatio
 })
 export class HomeComponent implements OnInit {
   isLoggedIn = false;
-  constructor(private presentationsService : PresentationsService,public chat: ChatService,private router: Router,public subjectsService : SubjectsService, private tokenStorage: TokenService, private dialog: MatDialog) {
+  userInfo: any
+  role: any
+  constructor(private tokenService:TokenService,private presentationsService : PresentationsService,public chat: ChatService,private router: Router,public subjectsService : SubjectsService, private tokenStorage: TokenService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
+    this.userInfo = this.tokenService.getUser()
+    this.role = this.userInfo.role
+    console.warn(this.role)
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.router.navigate(['/dashboard'])

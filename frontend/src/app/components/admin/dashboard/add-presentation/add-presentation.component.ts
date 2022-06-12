@@ -95,6 +95,7 @@ export class AddPresentationComponent implements OnInit {
     }
 
     console.log(this.subjectId)
+    console.log(this.pdf)
     // console.warn(this.presentationName)
     // console.warn(this.pdf)
     // console.warn(questions)

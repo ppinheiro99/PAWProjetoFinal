@@ -460,7 +460,7 @@ func GetClassificationByPresentation(c *gin.Context) {
 		//fmt.Printf("ID: ", PresentationQuestions[i].QuestionID)
 		if DoneAnswer.ID != 0 {
 			if DoneAnswer.StudentUsername == usr.Username {
-				if DoneAnswer.Was_Right == true {
+				if DoneAnswer.Was_Right {
 					classification += 1
 				}
 			}

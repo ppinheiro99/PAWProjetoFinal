@@ -1,0 +1,56 @@
+#grades .subject {
+    width: 100%;
+    max-width: 262px;
+    height: 100%;
+    max-height: 262px;
+    box-shadow: 0 2px 5px rgb(0 0 0 / 30%);
+    cursor: pointer;
+    margin: 20px 10px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+}
+
+#grades .subject:hover {
+    box-shadow: 0 4px 10px rgb(0 0 0 / 35%);
+}
+
+#grades .subject .subject-img {
+    height: 146px;
+    text-align: center;
+}
+
+#grades .subject .subject-info {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#grades .subject .subject-img .svg-img {
+    border-radius: 4px;
+    height: 100%;
+}
+
+#grades .wrap-subjects .wrap-subject-info{
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: space-between;
+    max-width: 150px;
+    margin: auto;
+}
+
+#grades .wrap-subjects .wrap-subject-info .svg-img:hover{
+    opacity: 0.5;
+} 
+
+#grades .subject .subject-img .background-image {
+    background-image: url(../../../../../assets/images/faculdade.png);      
+}
+
+#grades .wrap-subjects {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    max-width: 70%;
+}

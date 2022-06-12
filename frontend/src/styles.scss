@@ -86,3 +86,18 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.btn-normal{
+    cursor: pointer;
+    margin: 20px auto 10px;
+    padding: 10px 40px;
+    background-color: #008CBA;
+    text-align: center;
+    border-radius: 4px;
+    color: white;
+    max-width: 256px;
+}
+
+.btn-normal:hover{
+    opacity: 0.8;
+}
