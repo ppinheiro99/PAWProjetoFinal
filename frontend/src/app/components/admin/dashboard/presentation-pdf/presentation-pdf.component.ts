@@ -72,6 +72,7 @@ export class PresentationPdfComponent implements OnInit, AfterViewInit {
       console.log(this.presentationService.presentationData)
       
       this.chat.sendPresentationData(this.presentationService.presentationData)
+      this.chat.myTimer()
     })
   }
 
