@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   isLoggedIn = false;
   userInfo: any
   role: any
+  userResponse = ""
   constructor(private tokenService:TokenService,private presentationsService : PresentationsService,public chat: ChatService,private router: Router,public subjectsService : SubjectsService, private tokenStorage: TokenService, private dialog: MatDialog) {
   }
 
@@ -61,16 +62,23 @@ export class HomeComponent implements OnInit {
     if(this.chat.presentationData == undefined)
       return false
     else{
-      this.chat.presentationData == undefined
+      this.chat.presentationData = undefined
       return true
     }
   }
 
-  sendResponse(answer, id){
-    console.warn(answer)
-    this.presentationsService.sendUserResponse(answer, id).subscribe(data =>{
-      console.warn("sucesso")
-    })
+  sendUserResponse(id){
+    console.warn(this.userResponse, "    " ,id)
+    if(this.userResponse != ""){
+      this.presentationsService.sendUserResponse(this.userResponse, id).subscribe(data =>{
+        console.warn("sucesso")
+        this.chat.presentationData = undefined
+      })
+    }
+  }
+
+  updateResult(response){
+    this.userResponse = response
   }
 
 }
