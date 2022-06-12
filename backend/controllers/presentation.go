@@ -420,60 +420,52 @@ func GetPresentationAnswers(c *gin.Context) {
 
 }
 
+type grades struct {
+	presentationName string
+	classification   int
+}
+
 func GetClassificationByPresentation(c *gin.Context) {
 	var Presentation model.Presentations
-	var PresentationQuestions []model.PresentationAndQuestion
+	var PresentationQuestions model.PresentationAndQuestion
 	var DoneAnswers []model.DoneAnswers
-	var usr model.User
 
-	id := c.Param("id")
-
-	services.Db.First(&Presentation, id)
-	if Presentation.ID == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "Presentation not found!"})
-		return
-	}
-	services.Db.Where("presentation_id = ?", Presentation.ID).Find(&PresentationQuestions)
-	if len(PresentationQuestions) == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "Questions for Presentation not found!"})
-	}
-
-	// fmt.p
-
-	services.Db.First(&usr, "11111111")
-
-	fmt.Printf("entrei")
-
-	//Primeiro vemos se é um professor ou aluno
-
-	// role := strings.Split(c.Keys["username"].(string), "@")
-	// if IsLetter(c.Keys["username"].(string)) == true {
-	// c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": "No Answers were given to this presentation"})
-
-	// } else {
-	//if a student , only show their answers
-	var i = 0
-	var classification = 0
-	for i < len(PresentationQuestions) {
-		var DoneAnswer model.DoneAnswers
-		services.Db.Find(&DoneAnswer, PresentationQuestions[i].QuestionID)
-		//fmt.Printf("ID: ", PresentationQuestions[i].QuestionID)
-		if DoneAnswer.ID != 0 {
-			if DoneAnswer.StudentUsername == usr.Username {
-				if DoneAnswer.Was_Right {
-					classification += 1
-				}
-			}
-
-		}
-		i++
-	}
-	fmt.Printf("teste4 ")
+	// vamos buscara s respostas do aluno
+	services.Db.Find(&DoneAnswers, "student_username = ?", c.Keys["username"].(string))
 	if len(DoneAnswers) == 0 {
 		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": "No Answers were given to this presentation"})
-	} else {
-		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": classification})
 	}
-	// }
+	//Temos que saber a apresentaçao de cada resposta
+	i := 0
+	var Grade grades
+	var GradeArray []grades
+	Grade.classification = 0
+	Grade.presentationName = ""
+
+	for i < len(DoneAnswers) {
+		fmt.Printf("entrei")
+		///Vamos buscar a apresentação que tem aquela pergunta
+		services.Db.First(&PresentationQuestions, DoneAnswers[i].QuestionId)
+		/// vamos buscar o nome da apresentaçao
+		services.Db.Find(&Presentation, "id = ?", PresentationQuestions.PresentationID)
+		///Se for diferente entao estamos a classificar uma apresentação diferente
+		if Grade.presentationName != Presentation.Name {
+
+			Grade.presentationName = Presentation.Name
+			if DoneAnswers[i].Was_Right {
+				Grade.classification += 1
+			}
+		} else {
+			if DoneAnswers[i].Was_Right {
+				Grade.classification += 1
+			}
+		}
+
+		GradeArray = append(GradeArray, Grade)
+
+		i++
+	}
+	fmt.Printf("Inserted grade", GradeArray)
+	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": GradeArray})
 
 }

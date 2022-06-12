@@ -58,7 +58,7 @@ func main() {
 	}
 
 	presentations := router.Group("/api/v1/presentations")
-	// presentations.Use(services.AuthorizationRequired())
+	presentations.Use(services.AuthorizationRequired())
 	{
 		presentations.POST("/", routes.AddPresentation)
 		presentations.GET("/getAll/:id", routes.GetAllPresentation)
@@ -68,7 +68,7 @@ func main() {
 		presentations.GET("/:id/questions", routes.GetQuestionsByPresentationId)
 		presentations.POST("/submitAnswer", routes.SubmitAnswer)
 		presentations.GET("/:id/getAnswers", routes.GetPresentationAnswers)
-		presentations.GET("/:id/getClassificationByPresentation", routes.GetClassificationByPresentation)
+		presentations.GET("/getClassificationByPresentation", routes.GetClassificationByPresentation)
 
 	}
 
