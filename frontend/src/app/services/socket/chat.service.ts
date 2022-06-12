@@ -52,6 +52,9 @@ export class ChatService {
       console.warn("ENTREI " + data.correctAnswer, username)
       if(this.userName != username)
         this.presentationData = data  
+        // setTimeout(() => {
+        //   this.presentationData = undefined
+        // }, 30000) 
     })
 
 
@@ -98,6 +101,7 @@ export class ChatService {
   }
 
   sendPresentationData(data){
+    console.warn("enviar dados da apresentação")
     this.socket.emit('send_presentation_data', { 
       data: data,
     })

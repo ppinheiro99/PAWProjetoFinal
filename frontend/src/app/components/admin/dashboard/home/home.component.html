@@ -37,11 +37,32 @@
         </div>
     </div>
 </div>
-<div *ngIf="presentationAvailable()" id="questions">
-    <div class="question-name">
-        {{this.chat.presentationData.question}}
+<div *ngIf="this.chat.presentationData != undefined" id="questions">
+    <!-- <div class="question-name">
+        
     </div>
     <div class="subject" *ngFor="let questions of this.chat.presentationData.answers">
         <div (click)="sendResponse(questions, this.chat.presentationData.id)">{{questions}}</div>
+    </div> -->
+    <div style='transform: scale(0.65); position: relative;'>
+        <h3>{{this.chat.presentationData.question}}?</h3>
+        <p>Escolha a alínea verdadeira</p>
+        <hr />
+        <div class="subject" *ngFor="let questions of this.chat.presentationData.answers;let i = index" id='block-11' style='padding: 10px;'>
+          <label for='option-{{i}}' style=' padding: 5px; font-size: 2.5rem;'>
+            <input type='radio' name='option' value='6/24' id='option-{{i}}' style='transform: scale(1.6); margin-right: 10px; vertical-align: middle; margin-top: -2px;' />
+            {{questions}}</label>
+          <span id='result-{{i}}'></span>
+        </div>
+        <hr />
+      
+        <button type='button' class='btn-normal'onclick='sendResponse()'>Submit</button>
+      </div>
+      <a id='showanswer1'></a>
+</div>
+
+<div *ngIf="this.chat.presentationData == undefined && !role">
+    <div>
+        Aguarde pelas questões...
     </div>
 </div>
