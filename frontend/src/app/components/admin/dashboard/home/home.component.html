@@ -13,7 +13,7 @@
                 <div class="wrap-subject-info" style="display: flex; align-items: center">
                     <div class="svg-img subject-change-name"></div>
                     <div class="subject-info">
-                        {{subject.name}}
+                        {{subject.name}} 
                     </div>
                     <div class="svg-img subject-delete"(click)="deleteSubject(subject)"></div>
                 </div>
@@ -37,11 +37,31 @@
         </div>
     </div>
 </div>
-<div *ngIf="presentationAvailable()" id="questions">
-    <div class="question-name">
-        {{this.chat.presentationData.question}}
+<div *ngIf="this.chat.presentationData != undefined" id="questions">
+    <div class="wrapper">
+        <div class="times">
+            <p id="seconds">{{this.chat.timer}}</p>
+        </div>
     </div>
-    <div class="subject" *ngFor="let questions of this.chat.presentationData.answers">
-        <div (click)="sendResponse(questions, this.chat.presentationData.id)">{{questions}}</div>
+    <div style='transform: scale(0.65); position: relative;'>
+        <h3 style="font-size:26px;">{{this.chat.presentationData.question}}?</h3>
+        <p style="font-size:18px;">Escolha a alínea verdadeira</p>
+        <hr />
+        <div class="subject" *ngFor="let questions of this.chat.presentationData.answers;let i = index" id='block-11' style='padding: 10px;'>
+          <label for='option-{{i}}' style=' padding: 5px; font-size: 2.5rem;'>
+            <input type='radio' name='option' value='6/24' id='option-{{i}}' (change)="updateResult(questions)" style='transform: scale(1.6); margin-right: 10px; vertical-align: middle; margin-top: -2px;' />
+            {{questions}}</label>
+          <span id='result-{{i}}'></span>
+        </div>
+        <hr />
+      
+        <button style="font-size: 20px;"  type='button' class='btn-normal' (click)="sendUserResponse(this.chat.presentationData.id)">Submeter</button>
+      </div>
+      <a id='showanswer1'></a>
+</div>
+
+<div *ngIf="this.chat.presentationData == undefined && !role">
+    <div class="wait-for-answers">
+        Aguarde pelas questões...
     </div>
 </div>

@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenService } from "../../../../services/token/token.service";
-import { UsersService } from "../../../../services/user/users.service";
 
 @Component({
   selector: 'app-header',
@@ -16,7 +15,7 @@ export class HeaderComponent implements OnInit {
   isLoggedIn = false;
   displayedColumns = ['icon','message'];
 
-  constructor(private readonly router: Router, private tokenService: TokenService, private userService:UsersService) {}
+  constructor(private readonly router: Router, private tokenService: TokenService) {}
 
   ngOnInit() {
     this.isLoggedIn = !!this.tokenService.getToken();
