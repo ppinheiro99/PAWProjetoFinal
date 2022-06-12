@@ -420,9 +420,9 @@ func GetPresentationAnswers(c *gin.Context) {
 
 }
 
-type grades struct {
-	presentationName string
-	classification   int
+type Grades struct {
+	PresentationName string `json:"presentationName"`
+	Classification   int    `json:"classification"`
 }
 
 func GetClassificationByPresentation(c *gin.Context) {
@@ -437,10 +437,10 @@ func GetClassificationByPresentation(c *gin.Context) {
 	}
 	//Temos que saber a apresentaçao de cada resposta
 	i := 0
-	var Grade grades
-	var GradeArray []grades
-	Grade.classification = 0
-	Grade.presentationName = ""
+	var Grade Grades
+	var GradeArray []Grades
+	Grade.Classification = 0
+	Grade.PresentationName = ""
 
 	for i < len(DoneAnswers) {
 		fmt.Printf("entrei")
@@ -449,15 +449,15 @@ func GetClassificationByPresentation(c *gin.Context) {
 		/// vamos buscar o nome da apresentaçao
 		services.Db.Find(&Presentation, "id = ?", PresentationQuestions.PresentationID)
 		///Se for diferente entao estamos a classificar uma apresentação diferente
-		if Grade.presentationName != Presentation.Name {
+		if Grade.PresentationName != Presentation.Name {
 
-			Grade.presentationName = Presentation.Name
+			Grade.PresentationName = Presentation.Name
 			if DoneAnswers[i].Was_Right {
-				Grade.classification += 1
+				Grade.Classification += 1
 			}
 		} else {
 			if DoneAnswers[i].Was_Right {
-				Grade.classification += 1
+				Grade.Classification += 1
 			}
 		}
 
@@ -466,6 +466,7 @@ func GetClassificationByPresentation(c *gin.Context) {
 		i++
 	}
 	fmt.Printf("Inserted grade", GradeArray)
+
 	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": GradeArray})
 
 }
