@@ -43,8 +43,8 @@ export class PresentationsService {
     return this.http.get(API_URL + id + "/questions", httpOptionsPdf)
   }
 
-  getClassificationByPresentation(id): Observable<any> {
-    return this.http.get(API_URL + id + "/getClassificationByPresentation", httpOptions)
+  getClassificationByPresentation(username): Observable<any> {
+    return this.http.get(API_URL + "getClassificationByPresentation/" + username , httpOptions)
   }
 
   addPresentation(name, pdf_file,questions,subjectId): Observable<any> {

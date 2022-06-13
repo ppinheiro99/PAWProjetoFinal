@@ -1,4 +1,4 @@
-#grades .subject {
+.grades .subject {
     width: 100%;
     max-width: 262px;
     height: 100%;
@@ -10,28 +10,28 @@
     border: 1px solid transparent;
 }
 
-#grades .subject:hover {
+.grades .subject:hover {
     box-shadow: 0 4px 10px rgb(0 0 0 / 35%);
 }
 
-#grades .subject .subject-img {
+.grades .subject .subject-img {
     height: 146px;
     text-align: center;
 }
 
-#grades .subject .subject-info {
+.grades .subject .subject-info {
     height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#grades .subject .subject-img .svg-img {
+.grades .subject .subject-img .svg-img {
     border-radius: 4px;
     height: 100%;
 }
 
-#grades .wrap-subjects .wrap-subject-info{
+.grades .wrap-subjects .wrap-subject-info{
     display: flex;
     align-items: center;
     flex: 1;
@@ -40,15 +40,21 @@
     margin: auto;
 }
 
-#grades .wrap-subjects .wrap-subject-info .svg-img:hover{
+.grades .wrap-subjects .wrap-subject-info.teacher{
+    flex-direction: column;
+    margin-top: 10px;
+    max-width: 100%;
+}
+
+.grades .wrap-subjects .wrap-subject-info .svg-img:hover{
     opacity: 0.5;
 } 
 
-#grades .subject .subject-img .background-image {
+.grades .subject .subject-img .background-image {
     background-image: url(../../../../../assets/images/faculdade.png);      
 }
 
-#grades .wrap-subjects {
+.grades .wrap-subjects {
     display: flex;
     flex-wrap: wrap;
     height: 100%;

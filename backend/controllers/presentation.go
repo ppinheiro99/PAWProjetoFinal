@@ -137,13 +137,12 @@ func UpdatePresentationById(c *gin.Context) {
 		}
 	}
 
-	file, header, err := c.Request.FormFile("pdf_file")
+	file, _, err := c.Request.FormFile("pdf_file")
 	defer file.Close()
 	if err != nil {
 		c.String(http.StatusBadRequest, fmt.Sprintf("file err : %s", err.Error()))
 		return
 	}
-	fmt.Printf("File Name: %s\n", header.Filename)
 	buf := bytes.NewBuffer(nil)
 	if _, err := io.Copy(buf, file); err != nil {
 		c.String(http.StatusBadRequest, fmt.Sprintf("Error copying file : %s", err.Error()))
@@ -265,13 +264,12 @@ func AddPresentation(c *gin.Context) {
 		}
 	}
 
-	file, header, err := c.Request.FormFile("pdf_file")
+	file, _, err := c.Request.FormFile("pdf_file")
 	defer file.Close()
 	if err != nil {
 		c.String(http.StatusBadRequest, fmt.Sprintf("file err : %s", err.Error()))
 		return
 	}
-	fmt.Printf("File Name: %s\n", header.Filename)
 	buf := bytes.NewBuffer(nil)
 	if _, err := io.Copy(buf, file); err != nil {
 		c.String(http.StatusBadRequest, fmt.Sprintf("Error copying file : %s", err.Error()))
@@ -385,7 +383,6 @@ func GetPresentationAnswers(c *gin.Context) {
 		for i < len(PresentationQuestions) {
 			var DoneAnswer model.DoneAnswers
 			services.Db.Find(&DoneAnswer, PresentationQuestions[i].QuestionID)
-			//fmt.Printf("ID: ", PresentationQuestions[i].QuestionID)
 			if DoneAnswer.ID != 0 {
 				DoneAnswers = append(DoneAnswers, DoneAnswer)
 			}
@@ -402,7 +399,6 @@ func GetPresentationAnswers(c *gin.Context) {
 		for i < len(PresentationQuestions) {
 			var DoneAnswer model.DoneAnswers
 			services.Db.Find(&DoneAnswer, PresentationQuestions[i].QuestionID)
-			//fmt.Printf("ID: ", PresentationQuestions[i].QuestionID)
 			if DoneAnswer.ID != 0 {
 				if DoneAnswer.StudentUsername == usr.Username {
 					DoneAnswers = append(DoneAnswers, DoneAnswer)
@@ -428,6 +424,7 @@ type Grades struct {
 	StudentUsername  string `json:"studentUsername"`
 	PresentationName string `json:"presentationName"`
 	Classification   int    `json:"classification"`
+	Questions        int    `json:"questions"`
 }
 type Username struct {
 	Username string `json:"username"`
@@ -445,16 +442,19 @@ func GetClassificationByPresentation(c *gin.Context) {
 	var Subject []model.Subject
 	var PresentationAndQuestion []model.PresentationAndQuestion
 	var Grade Grades
+	var SubjectGradesAux SubjectGrades
+	Username.Username = c.Param("username")
 
-	if err := c.ShouldBindJSON(&Username); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"status": http.StatusBadRequest, "message": "Check request!"})
-		return
-	}
+	// if err := c.ShouldBindJSON(&Username); err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"status": http.StatusBadRequest, "message": "Check request!"})
+	// 	return
+	// }
 	if IsLetter(Username.Username) {
 		services.Db.Find(&Subject, "teacher = ?", Username.Username)
 		//Vamos buscar cada disciplina do professor
 		var j = 0
 		var SubjectGrades SubjectGrades
+
 		var TeacherGrades TeacherGrades
 		for j < len(Subject) {
 
@@ -477,11 +477,13 @@ func GetClassificationByPresentation(c *gin.Context) {
 							Grade.Classification = 0
 							Grade.PresentationName = ""
 							for i < len(DoneAnswers) {
+
 								///Vamos buscar a apresentação que tem aquela pergunta
 								services.Db.First(&PresentationQuestions, DoneAnswers[i].QuestionId)
 								/// vamos buscar o nome da apresentaçao
 								services.Db.Find(&Presentation, "id = ?", PresentationAndQuestion[kk].QuestionID)
 								///Se for diferente entao estamos a classificar uma apresentação diferente
+
 								if Grade.PresentationName != Presentation.Name {
 									Grade.PresentationName = Presentation.Name
 									if DoneAnswers[i].Was_Right {
@@ -493,22 +495,30 @@ func GetClassificationByPresentation(c *gin.Context) {
 									}
 								}
 								Grade.StudentUsername = Users[ind].Username
-								SubjectGrades.Grades = append(SubjectGrades.Grades, Grade)
-
 								i++
 							}
-
-							ind += 1
+							if Grade.StudentUsername != "" && Grade.PresentationName != "" {
+								Grade.Questions = len(DoneAnswers)
+								for _, grades := range SubjectGrades.Grades {
+									if grades.StudentUsername == Grade.StudentUsername {
+										SubjectGradesAux.Grades = append(SubjectGradesAux.Grades, grades)
+										SubjectGrades.Grades = append(SubjectGrades.Grades, Grade)
+									}
+								}
+								SubjectGrades.Grades = append(SubjectGrades.Grades, Grade)
+							}
+							ind++
 						}
 
 					}
-					kk += 1
+					kk++
 				}
-				k += 1
+				k++
 			}
-			j += 1
-			TeacherGrades.SubjectGrades = append(TeacherGrades.SubjectGrades, SubjectGrades)
+			j++
+
 		}
+		TeacherGrades.SubjectGrades = append(TeacherGrades.SubjectGrades, SubjectGradesAux)
 		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": TeacherGrades})
 		return
 
@@ -523,9 +533,10 @@ func GetClassificationByPresentation(c *gin.Context) {
 		i := 0
 		var Grade Grades
 		var GradeArray []Grades
+		var auxGradeArray []Grades
 		Grade.Classification = 0
 		Grade.PresentationName = ""
-
+		Grade.StudentUsername = Username.Username
 		for i < len(DoneAnswers) {
 			///Vamos buscar a apresentação que tem aquela pergunta
 			services.Db.First(&PresentationQuestions, DoneAnswers[i].QuestionId)
@@ -542,14 +553,12 @@ func GetClassificationByPresentation(c *gin.Context) {
 					Grade.Classification += 1
 				}
 			}
-
-			GradeArray = append(GradeArray, Grade)
-
+			auxGradeArray = append(auxGradeArray, Grade)
 			i++
 		}
-		fmt.Printf("Inserted grade", GradeArray)
+		GradeArray = append(GradeArray, Grade)
 
-		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": GradeArray})
+		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": GradeArray, "size": len(auxGradeArray)})
 		return
 	}
 

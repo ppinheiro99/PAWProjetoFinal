@@ -68,7 +68,7 @@ func main() {
 		presentations.GET("/:id/questions", routes.GetQuestionsByPresentationId)
 		presentations.POST("/submitAnswer", routes.SubmitAnswer)
 		presentations.GET("/:id/getAnswers", routes.GetPresentationAnswers)
-		presentations.GET("/getClassificationByPresentation", routes.GetClassificationByPresentation)
+		presentations.GET("/getClassificationByPresentation/:username", routes.GetClassificationByPresentation)
 
 	}
 

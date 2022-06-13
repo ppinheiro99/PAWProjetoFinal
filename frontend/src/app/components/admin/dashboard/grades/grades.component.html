@@ -1,30 +1,58 @@
-<div class="grades" id ="grades">
+<div *ngIf="!role" class="grades" id ="grades">
     <div class="wrap-grades">
         <div class="subject-info">
             <div class="subject-title">
-                Selecione a disciplina: 
+                Nota das apresentações: 
             </div>
-            <div class="wrap-subjects">
-                <div class="subject" (click)="selectedSubject($event)" *ngFor="let subject of this.subjectsService.subjects ">
-                    <div class="subject-img" (click)="getAllPresentations(subject.ID)">
-                        <div class="svg-img background-image"></div>
-                    </div>
-                    <div class="wrap-subject-info" style="display: flex; align-items: center;justify-content: center;">
-                        <div class="svg-img subject-change-name"></div>
-                        <div class="subject-info">
-                            {{subject.name}}
-                        </div>
-                    </div>
+        </div>
+    </div>
+    <div class="wrap-subjects">
+        <div class="subject" *ngFor="let subject of this.subjects ">
+            <div class="subject-img">
+                <div class="svg-img background-image"></div>
+            </div>
+            <div class="wrap-subject-info" style="display: flex; align-items: center;justify-content: center;">
+                <div class="svg-img subject-change-name"></div>
+                <div class="subject-info">
+                    {{subject.presentationName}} {{subject.classification}}/{{questionsNumbers}}
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div *ngIf="role" class="grades">
+    <div class="wrap-grades">
+        <div class="subject-info">
+            <div class="subject-title">
+                Nota dos alunos: 
+            </div>
+        </div>
+    </div>
+    <div class="wrap-subjects">
+        <div class="subject" *ngFor="let subject of this.students ">
+            <div class="subject-img">
+                <div class="svg-img background-image"></div>
+            </div>
+            <div class="wrap-subject-info teacher" style="display: flex; align-items: center;justify-content: center;">
+                <div class="name">nome: {{subject.studentUsername}}</div>
+                <div class="subject-info">
+                    {{subject.presentationName}} - nota: {{subject.classification}}/{{subject.questions}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!--
         <div *ngIf="this.presentationService.presentations != undefined">
             <div class="presentation-title">
                 Selecione a Apresentação: 
             </div>
             <div *ngFor="let presentation of this.presentationService.presentations">
-                <div (click)="getGrades(presentation.ID)">{{presentation.name}}</div>
+                <div (click)="getGrades()">{{presentation.name}}</div>
             </div>
         </div>
-    </div>
+    </div> 
+
 </div>
+-->
